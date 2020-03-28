@@ -1,0 +1,12 @@
+{
+  "name": "jvtrufas-common",
+  "version": "1.0.0",
+  "author": {
+    "name": "Henrique Couto",
+    "email": "henrique.coutu@live.com",
+    "url": "https://henriquecouto.com.br"
+  },
+  "description": "JV Trufas Common",
+  "main": "src/index.js",
+  "license": "MIT"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "jvtrufas",
+  "version": "1.0.0",
+  "author": {
+    "name": "Henrique Couto",
+    "email": "henrique.coutu@live.com",
+    "url": "https://henriquecouto.com.br"
+  },
+  "description": "JV Trufas",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}

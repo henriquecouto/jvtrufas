@@ -1,0 +1,16 @@
+{
+  "name": "jvtrufas-api",
+  "version": "1.0.0",
+  "author": {
+    "name": "Henrique Couto",
+    "email": "henrique.coutu@live.com",
+    "url": "https://henriquecouto.com.br"
+  },
+  "description": "JV Trufas API",
+  "main": "src/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jvtrufas-common": "1.0.0"
+  }
+}
