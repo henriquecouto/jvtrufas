@@ -7,6 +7,9 @@
     "url": "https://henriquecouto.com.br"
   },
   "description": "JV Trufas",
+  "scripts": {
+    "run-backend": "nodemon packages/api/src/index.js"
+  },
   "license": "MIT",
   "private": true,
   "workspaces": [
