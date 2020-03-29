@@ -8,9 +8,7 @@
   },
   "description": "JV Trufas",
   "scripts": {
-    "run-api": "yarn workspace jvtrufas-api start",
-    "add-api": "yarn workspace jvtrufas-api add",
-    "rm-api": "yarn workspace jvtrufas-api remove"
+    "run-api": "yarn workspace jvtrufas-api start"
   },
   "license": "MIT",
   "private": true,

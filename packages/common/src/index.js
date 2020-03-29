@@ -1,8 +1,10 @@
 const project = {
   name: "JV Trufas",
-  authors: ["Henrique Couto"]
+  author: {
+    name: "Henrique Couto",
+    email: "henrique.coutu@live.com",
+    url: "henriquecouto.com.br"
+  }
 };
 
-const getAuthors = () => project.authors.join(", ");
-
-module.exports = { project, getAuthors };
+module.exports = { project };
