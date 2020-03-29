@@ -8,7 +8,9 @@
   },
   "description": "JV Trufas",
   "scripts": {
-    "run-backend": "nodemon packages/api/src/index.js"
+    "run-api": "yarn workspace jvtrufas-api start",
+    "add-api": "yarn workspace jvtrufas-api add",
+    "rm-api": "yarn workspace jvtrufas-api add"
   },
   "license": "MIT",
   "private": true,
