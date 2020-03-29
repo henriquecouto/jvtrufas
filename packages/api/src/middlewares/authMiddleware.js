@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth");
 
-module.exports = (req, res, next) => {
+module.exports = type => (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
     return res.status(401).json({ message: "token malformed" });
   }
 
-  jwt.verify(token, authConfig.purchaser, (error, decoded) => {
+  jwt.verify(token, authConfig[type], (error, decoded) => {
     if (error) {
       return res.status(401).json({ message: "token invalid" });
     }
