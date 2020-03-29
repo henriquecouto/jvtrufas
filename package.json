@@ -10,7 +10,7 @@
   "scripts": {
     "run-api": "yarn workspace jvtrufas-api start",
     "add-api": "yarn workspace jvtrufas-api add",
-    "rm-api": "yarn workspace jvtrufas-api add"
+    "rm-api": "yarn workspace jvtrufas-api remove"
   },
   "license": "MIT",
   "private": true,
