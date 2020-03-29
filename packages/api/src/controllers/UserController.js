@@ -41,23 +41,26 @@ exports.createUser = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) {
+      return res.status(400).json({ message: "user not found" });
+    }
 
-  const user = await User.findOne({ email }).select("+password");
-  if (!user) {
-    return res.status(400).json({ message: "user not found" });
+    if (!(await bcrypt.compare(password, user.password))) {
+      return res.status(400).json({ message: "invalid password" });
+    }
+
+    user.password = undefined;
+
+    const token = jwt.sign({ id: user.id }, authConfig[user.type], {
+      expiresIn: 86400 * 30
+    });
+
+    return res.send({ user, token });
+  } catch (e) {
+    return res.status(400).send({ error: "login failed", message: e.message });
   }
-
-  if (!(await bcrypt.compare(password, user.password))) {
-    return res.status(400).json({ message: "invalid password" });
-  }
-
-  user.password = undefined;
-
-  const token = jwt.sign({ id: user.id }, authConfig[user.type], {
-    expiresIn: 86400 * 30
-  });
-
-  return res.send({ user, token });
 };
 
 exports.createAdmin = async (req, res) => {
