@@ -6,9 +6,7 @@ router
   .post(controller.createItem)
   .get(controller.getAll);
 
-// router
-//   .route("/:id")
-//   .get(controller.getOne)
+router.route("/:id").get(controller.getOne);
 //   .delete(controller.delete)
 //   .put(controller.edit)
 //   .patch(controller.edit);

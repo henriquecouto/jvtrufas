@@ -36,3 +36,16 @@ exports.getAll = async (req, res) => {
       .send({ error: "load items failed", message: e.message });
   }
 };
+
+exports.getOne = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const item = await Item.findById(id);
+    return res.send({ item });
+  } catch (error) {
+    return res
+      .status(400)
+      .send({ error: "load item failed", message: e.message });
+  }
+};
