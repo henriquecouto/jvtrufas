@@ -24,6 +24,7 @@ const port = 3030;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use("/auth", require("./routes/UserRouter"));
 
 app.get("/", (req, res) =>
   res.send(`
