@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const { ItemSchema } = require("./ItemModel");
 
 const OrderSchema = new mongoose.Schema({
   purchaser: { type: mongoose.SchemaTypes.ObjectId, required: true },
-  items: { type: [mongoose.SchemaTypes.ObjectId], required: true },
+  items: { type: [ItemSchema], required: true },
   type: { type: String, enum: ["scheduled", "instant"], required: true },
   deliveryDate: { type: Date, required: true },
   status: {

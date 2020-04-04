@@ -5,7 +5,7 @@ const ItemSchema = new mongoose.Schema({
   flavor: { type: String, required: true },
   photos: { type: [String] },
   amount: { type: Number },
-  registrationDate: { type: Date, default: Date.now() }
+  registrationDate: { type: Date, default: Date.now() },
 });
 
-module.exports = { Item: mongoose.model("Item", ItemSchema) };
+module.exports = { Item: mongoose.model("Item", ItemSchema), ItemSchema };
