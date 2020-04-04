@@ -7,12 +7,12 @@ const OrderSchema = new mongoose.Schema({
   deliveryDate: { type: Date, required: true },
   status: {
     type: String,
-    enum: ["cart", "waiting", "delivered", "canceled"],
+    enum: ["cart", "waiting", "preparing", "delivered", "canceled"],
     required: true,
-    default: "cart"
+    default: "cart",
   },
   evaluation: { type: mongoose.SchemaTypes.ObjectId },
-  registrationDate: { type: Date, default: Date.now() }
+  registrationDate: { type: Date, default: Date.now() },
 });
 
 module.exports = { Order: mongoose.model("Order", OrderSchema) };
