@@ -41,7 +41,7 @@ exports.getAll = async (req, res) => {
 };
 
 exports.getOne = async (req, res) => {
-  const { id } = req.params;
+  const { itemId } = req.params;
 
   try {
     const item = await Item.findById(id);
@@ -57,7 +57,7 @@ exports.getOne = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
-  const { id } = req.params;
+  const { itemId } = req.params;
   try {
     const item = await Item.findByIdAndDelete(id);
     if (!item) {
@@ -73,7 +73,7 @@ exports.delete = async (req, res) => {
 };
 
 exports.edit = async (req, res) => {
-  const { id } = req.params;
+  const { itemId } = req.params;
 
   try {
     if (!Object.keys(req.body).length) {

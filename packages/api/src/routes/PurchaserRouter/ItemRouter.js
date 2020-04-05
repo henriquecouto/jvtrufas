@@ -3,6 +3,6 @@ const controller = require("../../controllers/ItemController");
 
 router.route("/").get(controller.getAll);
 
-router.route("/:id").get(controller.getOne);
+router.route("/:itemId").get(controller.getOne);
 
 module.exports = router;

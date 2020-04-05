@@ -8,11 +8,11 @@ mongoose.connect("mongodb://localhost:27017/jvtrufas", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
-  useFindAndModify: false
+  useFindAndModify: false,
 });
 
 const db = mongoose.connection;
-db.on("error", error => {
+db.on("error", (error) => {
   console.log(error);
 });
 db.once("open", () => {
@@ -37,5 +37,5 @@ app.get("/", (req, res) =>
 );
 
 app.listen(port, () =>
-  console.log(`API listening on http://localhost:${port}!`)
+  console.log(`API listening on 'http://localhost:${port}'!`)
 );
