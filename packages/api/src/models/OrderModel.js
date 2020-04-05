@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 const { ItemSchema } = require("./ItemModel");
+const { AddressSchema } = require("./AddressModel");
 
 const OrderSchema = new mongoose.Schema({
-  purchaser: { type: mongoose.SchemaTypes.ObjectId, required: true },
+  purchaserId: { type: mongoose.SchemaTypes.ObjectId, required: true },
   items: { type: [ItemSchema], required: true },
   type: { type: String, enum: ["scheduled", "instant"], required: true },
   deliveryDate: { type: Date, required: true },
+  address: { type: AddressSchema, required: true },
+  payment: { type: String, enum: ["money"], default: "money" },
   status: {
     type: String,
     enum: ["cart", "waiting", "preparing", "delivered", "canceled"],
