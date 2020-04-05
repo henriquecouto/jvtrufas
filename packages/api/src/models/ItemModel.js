@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const ItemSchema = new mongoose.Schema({
-  name: { type: String, required: true, maxlength: 50, unique: true },
+  name: { type: String, required: true, maxlength: 50 },
   flavor: { type: String, required: true },
   photos: { type: [String] },
   amount: { type: Number },
