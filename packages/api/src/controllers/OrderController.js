@@ -17,6 +17,17 @@ exports.createOrder = async (req, res) => {
       req.body.items[index] = { ...req.body.items[index], ...item.toJSON() };
     }
 
+    if (req.userType === "purchaser") {
+      if (req.userId !== req.body.purchaserId) {
+        return res
+          .status(400)
+          .send({
+            error:
+              "you don't have permission to create order with other purchaser",
+          });
+      }
+    }
+
     const order = await Order.create(req.body);
 
     res.send({ order });

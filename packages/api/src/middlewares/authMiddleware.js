@@ -25,6 +25,7 @@ module.exports = (type) => (req, res, next) => {
     }
 
     req.userId = decoded.id;
+    req.userType = type;
     return next();
   });
 };
