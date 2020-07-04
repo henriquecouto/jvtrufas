@@ -14,7 +14,27 @@
   },
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": {
+    "nohoist": [
+      "**/react-native",
+      "**/react-native/**",
+      "**/react-native-gesture-handler",
+      "**/react-native-gesture-handler/**",
+      "**/@react-navigation/native",
+      "**/@react-navigation/native/**",
+      "**/@react-navigation/stack",
+      "**/@react-navigation/stack/**",
+      "**/@react-native-community/masked-view/",
+      "**/@react-native-community/masked-view/**",
+      "**/react-native-reanimated",
+      "**/react-native-reanimated/**",
+      "**/react-native-safe-area-context",
+      "**/react-native-safe-area-context/**",
+      "**/react-native-screens",
+      "**/react-native-screens/**"
+    ],
+    "packages": [
+      "packages/*"
+    ]
+  }
 }

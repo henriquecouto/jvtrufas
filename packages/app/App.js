@@ -1,10 +1,17 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+import Home from './screens/Home';
+
+const {Navigator, Screen} = createStackNavigator();
 
 export default function App() {
   return (
-    <View>
-      <Text>Hello JVTrufas</Text>
-    </View>
+    <NavigationContainer>
+      <Navigator headerMode="none">
+        <Screen name="Home" component={Home} />
+      </Navigator>
+    </NavigationContainer>
   );
 }
