@@ -18,7 +18,9 @@ exports.getAll = async (req, res) => {};
 
 exports.cancellOrder = async (req, res) => {};
 
-exports.getOrder = async (req, res) => {};
+exports.getOrder = async (req, res) => {
+  return res.send({ order: req.order });
+};
 
 exports.addItem = async (req, res) => {};
 
