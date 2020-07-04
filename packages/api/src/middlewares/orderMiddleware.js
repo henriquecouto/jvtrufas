@@ -23,7 +23,7 @@ module.exports = async (req, res, next) => {
     return res.status(400).send({ error: "order not finded" });
   }
 
-  if (userId !== String(order.purchaserId)) {
+  if (req.userType === "purchaser" && userId !== String(order.purchaserId)) {
     return res.status(400).send({ error: "permission denied" });
   }
 
