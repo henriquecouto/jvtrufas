@@ -19,12 +19,10 @@ exports.createOrder = async (req, res) => {
 
     if (req.userType === "purchaser") {
       if (req.userId !== req.body.purchaserId) {
-        return res
-          .status(400)
-          .send({
-            error:
-              "you don't have permission to create order with other purchaser",
-          });
+        return res.status(400).send({
+          error:
+            "you don't have permission to create order with other purchaser",
+        });
       }
     }
 
@@ -96,7 +94,13 @@ exports.makeOrder = async (req, res) => {
 };
 
 exports.getUserOrders = async (req, res) => {
-  const orders = await Order.find({ purchaserId: req.userId });
+  let orders = [];
+
+  if (req.userType === "purchaser") {
+    orders = await Order.find({ purchaserId: req.userId });
+  } else if (req.userType === "admin") {
+    orders = await Order.find({ purchaserId: req.params.userId });
+  }
 
   return res.send({ orders });
 };
