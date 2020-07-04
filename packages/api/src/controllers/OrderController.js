@@ -93,7 +93,16 @@ exports.addItem = async (req, res) => {
   }
 };
 
-exports.editOrder = async (req, res) => {};
+exports.editOrder = async (req, res) => {
+  try {
+    const order = await Order.findByIdAndUpdate(req.order._id, req.body, {
+      new: true,
+    });
+    return res.send({ order });
+  } catch (error) {
+    return res.status(400).send({ error });
+  }
+};
 
 exports.makeOrder = async (req, res) => {
   try {
