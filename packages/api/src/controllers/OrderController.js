@@ -26,4 +26,8 @@ exports.editOrder = async (req, res) => {};
 
 exports.makeOrder = async (req, res) => {};
 
-exports.getUserOrders = async (req, res) => {};
+exports.getUserOrders = async (req, res) => {
+  const orders = await Order.find({ purchaserId: req.userId });
+
+  return res.send({ orders });
+};

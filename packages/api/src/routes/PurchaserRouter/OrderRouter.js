@@ -3,10 +3,9 @@ const controller = require("../../controllers/OrderController");
 const orderMiddleware = require("../../middlewares/orderMiddleware");
 
 router.route("/").post(controller.createOrder);
-router.route("/user/:userId").get(controller.getUserOrders);
+router.route("/").get(controller.getUserOrders);
 
 router.use("/:orderId", orderMiddleware);
-
 router
   .route("/:orderId")
   .get(controller.getOrder)
