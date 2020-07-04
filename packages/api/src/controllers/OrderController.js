@@ -34,7 +34,14 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-exports.getAll = async (req, res) => {};
+exports.getAll = async (req, res) => {
+  try {
+    const orders = await Order.find();
+    return res.send({ orders });
+  } catch (error) {
+    return res.status(400).send({ error });
+  }
+};
 
 exports.cancellOrder = async (req, res) => {
   try {
