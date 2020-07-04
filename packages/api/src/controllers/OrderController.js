@@ -16,7 +16,18 @@ exports.createOrder = async (req, res) => {
 
 exports.getAll = async (req, res) => {};
 
-exports.cancellOrder = async (req, res) => {};
+exports.cancellOrder = async (req, res) => {
+  const order = await Order.findByIdAndUpdate(
+    req.order._id,
+    {
+      status: "canceled",
+    },
+    {
+      new: true,
+    }
+  );
+  return res.send({ order });
+};
 
 exports.getOrder = async (req, res) => {
   return res.send({ order: req.order });
