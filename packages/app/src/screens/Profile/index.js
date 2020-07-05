@@ -15,6 +15,7 @@ export default function Profile({navigation}) {
       <View style={styles.root}>
         <LargeButton
           onPress={() => navigation.push('SignIn')}
+          header="Ops..."
           title="Você ainda não está conectado 😕"
           subtitle="Entre agora!"
         />

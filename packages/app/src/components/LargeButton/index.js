@@ -2,11 +2,12 @@ import React from 'react';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {View, Text, StyleSheet} from 'react-native';
 
-export default function LargeButton({onPress, title, subtitle}) {
+export default function LargeButton({onPress, header, title, subtitle}) {
   return (
     <TouchableHighlight style={styles.root} onPress={onPress}>
       <View>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.header}>{header}</Text>
+        {title && <Text style={styles.title}>{title}</Text>}
         <Text style={styles.subtitle}>{subtitle}</Text>
       </View>
     </TouchableHighlight>
@@ -16,14 +17,24 @@ export default function LargeButton({onPress, title, subtitle}) {
 const styles = StyleSheet.create({
   root: {
     backgroundColor: '#5c2f0c',
-    borderRadius: 10,
-    alignItems: 'center',
+    borderRadius: 20,
     justifyContent: 'center',
     padding: 20,
   },
-  title: {
-    fontSize: 20,
+  image: {
+    flex: 1,
+    height: '100%',
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
+  header: {
+    fontSize: 35,
     fontFamily: 'FredokaOne-Regular',
+    color: '#fff',
+  },
+  title: {
+    marginTop: 10,
+    fontSize: 20,
     color: '#fff',
   },
   subtitle: {
