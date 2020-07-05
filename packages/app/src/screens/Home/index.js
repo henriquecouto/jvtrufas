@@ -1,24 +1,21 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {ScrollView, View, StyleSheet} from 'react-native';
+import Header from '../../components/Header';
 
 export default function Home() {
   return (
     <ScrollView>
-      <View style={styles.header}>
-        <Text style={styles.text}>JV Trufas</Text>
+      <View style={styles.root}>
+        <Header title="JV Trufas" />
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    alignItems: 'center',
+  root: {
+    height: '100%',
     padding: 20,
-  },
-  text: {
-    fontSize: 50,
-    fontFamily: 'FredokaOne-Regular',
-    color: '#5c2f0c',
+    justifyContent: 'space-evenly',
   },
 });

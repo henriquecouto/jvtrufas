@@ -4,6 +4,7 @@ import {GlobalContext} from '../../contexts/global';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import ProfileItem from '../../components/ProfileItem';
 import CustomButton from '../../components/CustomButton';
+import Header from '../../components/Header';
 
 export default function Profile({navigation}) {
   const [{auth}, actions] = useContext(GlobalContext);
@@ -28,9 +29,7 @@ export default function Profile({navigation}) {
   return (
     <ScrollView>
       <View style={styles.root}>
-        <View style={styles.header}>
-          <Text style={styles.text}>Seu Perfil</Text>
-        </View>
+        <Header title="Meu perfil" />
         <ProfileItem value={auth.user.name} icon="user" name="Nome" />
         <ProfileItem value={auth.user.email} icon="mail" name="Email" />
         <ProfileItem value={auth.user.whatsapp} icon="phone" name="WhatsApp" />
@@ -45,15 +44,6 @@ const styles = StyleSheet.create({
     height: '100%',
     padding: 20,
     justifyContent: 'space-evenly',
-  },
-  header: {
-    alignItems: 'center',
-    padding: 20,
-  },
-  text: {
-    fontSize: 50,
-    fontFamily: 'FredokaOne-Regular',
-    color: '#5c2f0c',
   },
   makeLogin: {
     backgroundColor: '#5c2f0c',
