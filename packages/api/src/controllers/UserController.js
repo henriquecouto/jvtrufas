@@ -8,34 +8,38 @@ exports.createUser = async (req, res) => {
   try {
     if (type && type !== "purchaser") {
       return res.status(400).send({
-        error: "invalid user type"
+        message: "invalid user type",
       });
     }
 
     if (!email) {
-      return res.status(400).send({ error: "email is required" });
+      return res.status(400).send({ message: "email is required" });
     }
 
     if (!name) {
-      return res.status(400).send({ error: "name is required" });
+      return res.status(400).send({ message: "name is required" });
     }
 
     if (!password) {
-      return res.status(400).send({ error: "password is required" });
+      return res.status(400).send({ message: "password is required" });
     }
 
     if (await User.findOne({ email })) {
-      return res.status(400).send({ error: "email already registered" });
+      return res.status(400).send({ message: "email already registered" });
     }
 
     const user = await User.create(req.body);
     user.password = undefined;
 
-    return res.send({ user });
+    const token = jwt.sign({ id: user.id }, authConfig[user.type], {
+      expiresIn: 86400 * 30,
+    });
+
+    return res.send({ user, token });
   } catch (e) {
     return res
       .status(400)
-      .send({ error: "registration failed", message: e.message });
+      .send({ message: "registration failed", error: e.message });
   }
 };
 
@@ -54,12 +58,12 @@ exports.login = async (req, res) => {
     user.password = undefined;
 
     const token = jwt.sign({ id: user.id }, authConfig[user.type], {
-      expiresIn: 86400 * 30
+      expiresIn: 86400 * 30,
     });
 
     return res.send({ user, token });
   } catch (e) {
-    return res.status(400).send({ error: "login failed", message: e.message });
+    return res.status(400).send({ message: "login failed", error: e.message });
   }
 };
 
@@ -68,24 +72,24 @@ exports.createAdmin = async (req, res) => {
   try {
     if (type !== "admin") {
       return res.status(400).send({
-        error: "invalid user type"
+        message: "invalid user type",
       });
     }
 
     if (!email) {
-      return res.status(400).send({ error: "email is required" });
+      return res.status(400).send({ message: "email is required" });
     }
 
     if (!name) {
-      return res.status(400).send({ error: "name is required" });
+      return res.status(400).send({ message: "name is required" });
     }
 
     if (!password) {
-      return res.status(400).send({ error: "password is required" });
+      return res.status(400).send({ message: "password is required" });
     }
 
     if (await User.findOne({ email })) {
-      return res.status(400).send({ error: "email already registered" });
+      return res.status(400).send({ message: "email already registered" });
     }
 
     const user = await User.create(req.body);

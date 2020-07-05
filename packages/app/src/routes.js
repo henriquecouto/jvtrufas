@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import Home from './screens/Home';
 import SignIn from './screens/SignIn';
+import SignUp from './screens/SignUp';
 import Profile from './screens/Profile';
 
 const Stack = createStackNavigator();
@@ -43,7 +44,7 @@ export default function Routes() {
     <NavigationContainer>
       <Stack.Navigator headerMode="none" initialRouteName={'Home'}>
         <Stack.Screen name="SignIn" component={SignIn} />
-        {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
+        <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Home" component={BottomTabRoutes} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -14,18 +14,23 @@ import {GlobalContext} from '../../contexts/global';
 import CustomButton from '../../components/CustomButton';
 
 const errorList = {
-  'user not found': 'Você não está cadastrado',
-  'invalid password': 'Sua senha está errada',
-  'login failed': 'Ocorreu um erro inesperado',
+  'invalid user type': 'Tipo de usuário inválido',
+  'email is required': 'Você precisa inserir seu email',
+  'name is required': 'Você precisa inserir seu nome',
+  'password is required': 'Você precisa criar uma senha',
+  'email already registered': 'Seu email já está cadastrado',
+  'registration failed': 'Ocorreu um erro inesperado',
 };
 
-export default function SignIn({navigation}) {
+export default function SignUp({navigation}) {
   const [, actions] = useContext(GlobalContext);
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  const login = async () => {
+  const register = async () => {
     if (!isValidEmail(email)) {
       setError('Você digitou um email inválido');
       return;
@@ -36,9 +41,19 @@ export default function SignIn({navigation}) {
       return;
     }
 
+    if (!name) {
+      setError('Insira o seu nome');
+      return;
+    }
+
     try {
       setError(null);
-      const {data} = await api.post('/auth/login', {email, password});
+      const {data} = await api.post('/auth/register', {
+        email,
+        password,
+        whatsapp,
+        name,
+      });
       actions.login(data);
       navigation.navigate('Home');
     } catch (err) {
@@ -56,7 +71,7 @@ export default function SignIn({navigation}) {
           <Text style={styles.title}>JV Trufas</Text>
         </View>
         <View style={styles.body}>
-          <Text style={styles.subtitle}>Entre e faça seu pedido</Text>
+          <Text style={styles.subtitle}>Faça seu cadastro</Text>
 
           <View style={styles.form}>
             {error && (
@@ -64,7 +79,24 @@ export default function SignIn({navigation}) {
                 <Text style={styles.error}>{error}</Text>
               </View>
             )}
-
+            <TextInput
+              style={styles.input}
+              placeholder="Seu nome"
+              autoCompleteType="name"
+              value={name}
+              onChangeText={setName}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Whatsapp (opcional)"
+              autoCompleteType="cc-number"
+              textContentType="telephoneNumber"
+              keyboardType="numeric"
+              dataDetectorTypes="phoneNumber"
+              maxLength={12}
+              value={whatsapp}
+              onChangeText={setWhatsapp}
+            />
             <TextInput
               style={styles.input}
               placeholder="Email"
@@ -80,14 +112,14 @@ export default function SignIn({navigation}) {
               value={password}
               onChangeText={setPassword}
             />
-            <CustomButton onPress={login}>Entrar</CustomButton>
+            <CustomButton onPress={register}>Cadastrar</CustomButton>
           </View>
         </View>
         <View style={styles.footer}>
           <CustomButton
             color="transparent"
-            onPress={() => navigation.push('SignUp')}>
-            Cadastre-se
+            onPress={() => navigation.navigate('SignIn')}>
+            Já tenho uma conta! 😁
           </CustomButton>
         </View>
       </View>

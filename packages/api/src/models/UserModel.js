@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema({
   addresses: { type: [AddressSchema] },
   name: { type: String, required: true, maxlength: 50 },
   email: { type: String, required: true, unique: true },
+  whatsapp: { type: String, maxlength: 12 },
   password: { type: String, required: true, select: false },
   photo: { type: String },
   registrationDate: { type: Date, default: Date.now() },

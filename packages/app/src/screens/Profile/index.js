@@ -33,6 +33,7 @@ export default function Profile({navigation}) {
         </View>
         <ProfileItem value={auth.user.name} icon="user" name="Nome" />
         <ProfileItem value={auth.user.email} icon="mail" name="Email" />
+        <ProfileItem value={auth.user.whatsapp} icon="phone" name="WhatsApp" />
         <CustomButton onPress={actions.logout}>Sair</CustomButton>
       </View>
     </ScrollView>
