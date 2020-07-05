@@ -5,6 +5,7 @@ import {TouchableHighlight} from 'react-native-gesture-handler';
 import ProfileItem from '../../components/ProfileItem';
 import CustomButton from '../../components/CustomButton';
 import Header from '../../components/Header';
+import LargeButton from '../../components/LargeButton';
 
 export default function Profile({navigation}) {
   const [{auth}, actions] = useContext(GlobalContext);
@@ -12,16 +13,11 @@ export default function Profile({navigation}) {
   if (!auth.token) {
     return (
       <View style={styles.root}>
-        <TouchableHighlight
-          style={styles.makeLogin}
-          onPress={() => navigation.push('SignIn')}>
-          <View>
-            <Text style={styles.makeLoginText}>
-              Você ainda não está conectado 😕
-            </Text>
-            <Text style={styles.makeLoginCall}>Entre agora!</Text>
-          </View>
-        </TouchableHighlight>
+        <LargeButton
+          onPress={() => navigation.push('SignIn')}
+          title="Você ainda não está conectado 😕"
+          subtitle="Entre agora!"
+        />
       </View>
     );
   }
@@ -44,36 +40,6 @@ const styles = StyleSheet.create({
     height: '100%',
     padding: 20,
     justifyContent: 'space-evenly',
-  },
-  makeLogin: {
-    backgroundColor: '#5c2f0c',
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  makeLoginText: {
-    fontSize: 20,
-    fontFamily: 'FredokaOne-Regular',
-    color: '#fff',
-  },
-  makeLoginCall: {
-    marginTop: 20,
-    backgroundColor: '#ff6600',
-    padding: 15,
-    borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    fontFamily: 'FredokaOne-Regular',
-    fontSize: 20,
-    textAlign: 'center',
-    color: '#fff',
   },
   button: {
     marginVertical: 10,
