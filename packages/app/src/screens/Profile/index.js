@@ -5,7 +5,7 @@ import {TouchableHighlight} from 'react-native-gesture-handler';
 import ProfileItem from '../../components/ProfileItem';
 
 export default function Profile({navigation}) {
-  const [{auth}] = useContext(GlobalContext);
+  const [{auth}, actions] = useContext(GlobalContext);
 
   if (!auth.token) {
     return (
@@ -32,6 +32,9 @@ export default function Profile({navigation}) {
         </View>
         <ProfileItem value={auth.user.name} icon="user" name="Nome" />
         <ProfileItem value={auth.user.email} icon="mail" name="Email" />
+        <TouchableHighlight style={styles.button} onPress={actions.logout}>
+          <Text style={styles.buttonText}>Sair</Text>
+        </TouchableHighlight>
       </View>
     </ScrollView>
   );
@@ -77,6 +80,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    fontFamily: 'FredokaOne-Regular',
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#fff',
+  },
+  button: {
+    marginVertical: 10,
+    backgroundColor: '#ff6600',
+    padding: 15,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonText: {
     fontFamily: 'FredokaOne-Regular',
     fontSize: 20,
     textAlign: 'center',

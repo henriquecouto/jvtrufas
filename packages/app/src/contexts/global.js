@@ -17,7 +17,16 @@ export const GlobalContextProvider = ({children}) => {
     }
   };
 
-  const actions = {login};
+  const logout = async () => {
+    try {
+      await Storage.removeItem('auth');
+      setGlobalState((old) => ({...old, auth: {}}));
+    } catch (error) {
+      console.log('global start logout error: ', error);
+    }
+  };
+
+  const actions = {login, logout};
 
   const loadAuth = async () => {
     try {

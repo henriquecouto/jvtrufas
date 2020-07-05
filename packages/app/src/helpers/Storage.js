@@ -9,7 +9,12 @@ const getItem = async (name) => {
   return JSON.parse(value || '{}');
 };
 
+const removeItem = async (name) => {
+  await AsyncStorage.removeItem(name);
+};
+
 export default {
   setItem,
   getItem,
+  removeItem,
 };
