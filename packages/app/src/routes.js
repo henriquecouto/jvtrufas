@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Feather';
 
 import Home from './screens/Home';
-import Login from './screens/Login';
+import SignIn from './screens/SignIn';
 import Profile from './screens/Profile';
 
 const Stack = createStackNavigator();
@@ -42,7 +42,8 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none" initialRouteName={'Home'}>
-        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="SignIn" component={SignIn} />
+        {/* <Stack.Screen name="SignUp" component={SignUp} /> */}
         <Stack.Screen name="Home" component={BottomTabRoutes} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -11,6 +11,7 @@ import {
 import api from '../../../api';
 import isValidEmail from '../../helpers/isValidEmail';
 import {GlobalContext} from '../../contexts/global';
+import CustomButton from '../../components/CustomButton';
 
 const errorList = {
   'user not found': 'Você não está cadastrado',
@@ -18,7 +19,7 @@ const errorList = {
   'login failed': 'Ocorreu um erro inesperado',
 };
 
-export default function Home({navigation}) {
+export default function SignIn({navigation}) {
   const [, actions] = useContext(GlobalContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -79,15 +80,13 @@ export default function Home({navigation}) {
               value={password}
               onChangeText={setPassword}
             />
-            <TouchableHighlight style={styles.button} onPress={login}>
-              <Text style={styles.buttonText}>Entrar</Text>
-            </TouchableHighlight>
+            <CustomButton onPress={login}>Entrar</CustomButton>
           </View>
         </View>
         <View style={styles.footer}>
-          <TouchableHighlight style={styles.buttonSecondary} onPress={() => {}}>
-            <Text style={styles.buttonText}>Cadastre-se</Text>
-          </TouchableHighlight>
+          <CustomButton color="transparent" onPress={() => {}}>
+            Cadastre-se
+          </CustomButton>
         </View>
       </View>
     </ImageBackground>
@@ -137,31 +136,6 @@ const styles = StyleSheet.create({
     padding: 15,
     color: '#5c2f0c',
     marginVertical: 10,
-  },
-  button: {
-    marginVertical: 10,
-    backgroundColor: '#ff6600',
-    padding: 15,
-    borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  buttonSecondary: {
-    marginVertical: 10,
-    padding: 15,
-    borderRadius: 20,
-  },
-  buttonText: {
-    fontFamily: 'FredokaOne-Regular',
-    fontSize: 20,
-    textAlign: 'center',
-    color: '#fff',
   },
   footer: {
     alignItems: 'center',

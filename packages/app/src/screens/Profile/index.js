@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {GlobalContext} from '../../contexts/global';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import ProfileItem from '../../components/ProfileItem';
+import CustomButton from '../../components/CustomButton';
 
 export default function Profile({navigation}) {
   const [{auth}, actions] = useContext(GlobalContext);
@@ -12,7 +13,7 @@ export default function Profile({navigation}) {
       <View style={styles.root}>
         <TouchableHighlight
           style={styles.makeLogin}
-          onPress={() => navigation.push('Login')}>
+          onPress={() => navigation.push('SignIn')}>
           <View>
             <Text style={styles.makeLoginText}>
               Você ainda não está conectado 😕
@@ -32,9 +33,7 @@ export default function Profile({navigation}) {
         </View>
         <ProfileItem value={auth.user.name} icon="user" name="Nome" />
         <ProfileItem value={auth.user.email} icon="mail" name="Email" />
-        <TouchableHighlight style={styles.button} onPress={actions.logout}>
-          <Text style={styles.buttonText}>Sair</Text>
-        </TouchableHighlight>
+        <CustomButton onPress={actions.logout}>Sair</CustomButton>
       </View>
     </ScrollView>
   );
