@@ -24,14 +24,18 @@
       "**/@react-navigation/native/**",
       "**/@react-navigation/stack",
       "**/@react-navigation/stack/**",
-      "**/@react-native-community/masked-view/",
+      "**/@react-native-community/masked-view",
       "**/@react-native-community/masked-view/**",
+      "**/@react-native-community/async-storage",
+      "**/@react-native-community/async-storage/**",
       "**/react-native-reanimated",
       "**/react-native-reanimated/**",
       "**/react-native-safe-area-context",
       "**/react-native-safe-area-context/**",
       "**/react-native-screens",
-      "**/react-native-screens/**"
+      "**/react-native-screens/**",
+      "**/axios",
+      "**/axios/**"
     ],
     "packages": [
       "packages/*"

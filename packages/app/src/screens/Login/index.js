@@ -1,18 +1,51 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   ImageBackground,
   TextInput,
-  Button,
   TouchableHighlight,
-  Dimensions,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
-export default function Home() {
+import api from '../../../api';
+import isValidEmail from '../../helpers/isValidEmail';
+import {GlobalContext} from '../../contexts/global';
+
+const errorList = {
+  'user not found': 'Você não está cadastrado',
+  'invalid password': 'Sua senha está errada',
+  'login failed': 'Ocorreu um erro inesperado',
+};
+
+export default function Home({navigation}) {
+  const [, actions] = useContext(GlobalContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+
+  const login = async () => {
+    if (!isValidEmail(email)) {
+      setError('Você digitou um email inválido');
+      return;
+    }
+
+    if (!password) {
+      setError('Insira a sua senha');
+      return;
+    }
+
+    try {
+      setError(null);
+      const {data} = await api.post('/auth/login', {email, password});
+      actions.login(data);
+      navigation.navigate('Home');
+    } catch (err) {
+      setError(errorList[err.response.data.message]);
+      console.log('login error: ', err.response.data.message);
+    }
+  };
+
   return (
     <ImageBackground
       source={require('../../../assets/images/truffles.jpg')}
@@ -22,20 +55,31 @@ export default function Home() {
           <Text style={styles.title}>JV Trufas</Text>
         </View>
         <View style={styles.body}>
-          <Text style={styles.subtitle}>Entre para pedir</Text>
+          <Text style={styles.subtitle}>Entre e faça seu pedido</Text>
+
           <View style={styles.form}>
+            {error && (
+              <View style={styles.errorContainer}>
+                <Text style={styles.error}>{error}</Text>
+              </View>
+            )}
+
             <TextInput
               style={styles.input}
               placeholder="Email"
               autoCompleteType="email"
+              value={email}
+              onChangeText={setEmail}
             />
             <TextInput
               secureTextEntry
               style={styles.input}
               placeholder="Senha"
               autoCompleteType="password"
+              value={password}
+              onChangeText={setPassword}
             />
-            <TouchableHighlight style={styles.button} onPress={() => {}}>
+            <TouchableHighlight style={styles.button} onPress={login}>
               <Text style={styles.buttonText}>Entrar</Text>
             </TouchableHighlight>
           </View>
@@ -121,5 +165,16 @@ const styles = StyleSheet.create({
   },
   footer: {
     alignItems: 'center',
+  },
+  errorContainer: {
+    marginVertical: 10,
+    backgroundColor: '#f002',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+  },
+  error: {
+    color: '#f00',
+    fontSize: 15,
   },
 });
