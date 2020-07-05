@@ -5,6 +5,7 @@ import api from '../../../api';
 import isValidEmail from '../../helpers/isValidEmail';
 import {GlobalContext} from '../../contexts/global';
 import CustomButton from '../../components/CustomButton';
+import Error from '../../components/Error';
 
 const errorList = {
   'user not found': 'Você não está cadastrado',
@@ -52,12 +53,7 @@ export default function SignIn({navigation}) {
           <Text style={styles.subtitle}>Entre e faça seu pedido</Text>
 
           <View style={styles.form}>
-            {error && (
-              <View style={styles.errorContainer}>
-                <Text style={styles.error}>{error}</Text>
-              </View>
-            )}
-
+            <Error message={error} />
             <TextInput
               style={styles.input}
               placeholder="Email"
@@ -134,16 +130,5 @@ const styles = StyleSheet.create({
   },
   footer: {
     alignItems: 'center',
-  },
-  errorContainer: {
-    marginVertical: 10,
-    backgroundColor: '#f002',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 20,
-  },
-  error: {
-    color: '#f00',
-    fontSize: 15,
   },
 });

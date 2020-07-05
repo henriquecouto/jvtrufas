@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {GlobalContext} from '../../contexts/global';
-import {TouchableHighlight} from 'react-native-gesture-handler';
 import ProfileItem from '../../components/ProfileItem';
 import CustomButton from '../../components/CustomButton';
 import Header from '../../components/Header';

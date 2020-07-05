@@ -3,7 +3,7 @@ import {ScrollView, View, StyleSheet} from 'react-native';
 import Header from '../../components/Header';
 import LargeButton from '../../components/LargeButton';
 
-export default function Home() {
+export default function Home({navigation}) {
   return (
     <ScrollView>
       <View style={styles.root}>
@@ -12,7 +12,7 @@ export default function Home() {
           header="Fazer encomenda"
           title="Deliciosas trufas e licores esperam por você! 😉"
           subtitle="Eu quero"
-          onPress={() => {}}
+          onPress={() => navigation.navigate('Shop')}
         />
       </View>
     </ScrollView>

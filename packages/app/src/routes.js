@@ -8,10 +8,11 @@ import Home from './screens/Home';
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 import Profile from './screens/Profile';
+import ShopHome from './screens/ShopHome';
 
 const Stack = createStackNavigator();
-
 const BottomTab = createBottomTabNavigator();
+const Shop = createStackNavigator();
 
 function BottomTabRoutes() {
   return (
@@ -39,6 +40,26 @@ function BottomTabRoutes() {
   );
 }
 
+function ShopRoutes() {
+  return (
+    <Shop.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          fontFamily: 'FredokaOne-Regular',
+        },
+        headerTintColor: '#5c2f0c',
+      }}>
+      <Shop.Screen
+        name="ShopHome"
+        component={ShopHome}
+        options={{
+          title: 'Fazer Encomenda',
+        }}
+      />
+    </Shop.Navigator>
+  );
+}
+
 export default function Routes() {
   return (
     <NavigationContainer>
@@ -46,6 +67,7 @@ export default function Routes() {
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Home" component={BottomTabRoutes} />
+        <Stack.Screen name="Shop" component={ShopRoutes} />
       </Stack.Navigator>
     </NavigationContainer>
   );

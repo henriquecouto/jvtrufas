@@ -5,6 +5,7 @@ import api from '../../../api';
 import isValidEmail from '../../helpers/isValidEmail';
 import {GlobalContext} from '../../contexts/global';
 import CustomButton from '../../components/CustomButton';
+import Error from '../../components/Error';
 
 const errorList = {
   'invalid user type': 'Tipo de usuário inválido',
@@ -67,11 +68,7 @@ export default function SignUp({navigation}) {
           <Text style={styles.subtitle}>Faça seu cadastro</Text>
 
           <View style={styles.form}>
-            {error && (
-              <View style={styles.errorContainer}>
-                <Text style={styles.error}>{error}</Text>
-              </View>
-            )}
+            <Error message={error} />
             <TextInput
               style={styles.input}
               placeholder="Seu nome"
