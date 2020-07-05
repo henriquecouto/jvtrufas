@@ -1,12 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  TextInput,
-  TouchableHighlight,
-} from 'react-native';
+import {View, Text, StyleSheet, ImageBackground, TextInput} from 'react-native';
 
 import api from '../../../api';
 import isValidEmail from '../../helpers/isValidEmail';

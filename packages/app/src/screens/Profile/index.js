@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {GlobalContext} from '../../contexts/global';
 import {TouchableHighlight} from 'react-native-gesture-handler';
