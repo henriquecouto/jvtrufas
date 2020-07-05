@@ -24,16 +24,18 @@ const port = 3030;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.static("public"));
+
 app.use("/auth", require("./routes/UserRouter"));
 app.use("/admin", require("./routes/AdminRouter"));
 app.use("/purchaser", require("./routes/PurchaserRouter"));
 
 app.get("/", (req, res) =>
   res.send(`
-    <h1>${project.name} API made by ${project.author.name}!</h1>
-    Email: <a href="mailto:${project.author.email}">${project.author.email}</a>
-    Site: <a href="https://${project.author.url}" target="blank">${project.author.url}</a>
-  `)
+<h1>${project.name} API made by ${project.author.name}!</h1>
+Email: <a href="mailto:${project.author.email}">${project.author.email}</a>
+Site: <a href="https://${project.author.url}" target="blank">${project.author.url}</a>
+`)
 );
 
 app.listen(port, () =>

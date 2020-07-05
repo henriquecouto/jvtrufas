@@ -1,12 +1,12 @@
 const { Item } = require("../models/ItemModel");
 
 exports.createItem = async (req, res) => {
-  const { name, flavor } = req.body;
+  const { name, flavor, price } = req.body;
 
   try {
-    if (await Item.findOne({ name })) {
-      return res.status(400).send({ error: "item already registered" });
-    }
+    // if (await Item.findOne({ name })) {
+    //   return res.status(400).send({ error: "item already registered" });
+    // }
 
     if (!name) {
       return res.status(400).send({ error: "name is required" });
@@ -14,6 +14,10 @@ exports.createItem = async (req, res) => {
 
     if (!flavor) {
       return res.status(400).send({ error: "flavor is required" });
+    }
+
+    if (!price) {
+      return res.status(400).send({ error: "price is required" });
     }
 
     const item = await Item.create(req.body);

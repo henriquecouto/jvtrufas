@@ -3,6 +3,11 @@
 # Edit at https://www.gitignore.io/?templates=node
 
 ### Node ###
+
+# Uploads
+**/uploads/
+**/public/
+
 # Logs
 logs
 *.log
