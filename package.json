@@ -24,6 +24,8 @@
       "**/@react-navigation/native/**",
       "**/@react-navigation/stack",
       "**/@react-navigation/stack/**",
+      "**/@react-navigation/bottom-tabs",
+      "**/@react-navigation/bottom-tabs/**",
       "**/@react-native-community/masked-view",
       "**/@react-native-community/masked-view/**",
       "**/@react-native-community/async-storage",
@@ -35,7 +37,9 @@
       "**/react-native-screens",
       "**/react-native-screens/**",
       "**/axios",
-      "**/axios/**"
+      "**/axios/**",
+      "**/react-native-vector-icons",
+      "**/react-native-vector-icons/**"
     ],
     "packages": [
       "packages/*"

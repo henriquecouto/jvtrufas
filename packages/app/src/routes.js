@@ -1,19 +1,50 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/Feather';
 
 import Home from './screens/Home';
 import Login from './screens/Login';
+import Profile from './screens/Profile';
 
-const {Navigator, Screen} = createStackNavigator();
+const Stack = createStackNavigator();
+
+const BottomTab = createBottomTabNavigator();
+
+function BottomTabRoutes() {
+  return (
+    <BottomTab.Navigator
+      tabBarOptions={{
+        labelStyle: {display: 'none'},
+        style: {backgroundColor: '#5c2f0c'},
+        activeBackgroundColor: '#0004',
+      }}>
+      <BottomTab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: () => <Icon name="home" size={30} color="#fff" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: () => <Icon name="user" size={30} color="#fff" />,
+        }}
+      />
+    </BottomTab.Navigator>
+  );
+}
 
 export default function Routes() {
   return (
     <NavigationContainer>
-      <Navigator headerMode="none" initialRouteName={'Home'}>
-        <Screen name="Login" component={Login} />
-        <Screen name="Home" component={Home} />
-      </Navigator>
+      <Stack.Navigator headerMode="none" initialRouteName={'Home'}>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Home" component={BottomTabRoutes} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
