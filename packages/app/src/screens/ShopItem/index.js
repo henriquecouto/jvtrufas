@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 import {
   FlatList,
@@ -10,10 +10,11 @@ import {baseURL} from '../../../api';
 import parsePrice from '../../helpers/parsePrice';
 import CustomButton from '../../components/CustomButton';
 import Icon from 'react-native-vector-icons/Feather';
+import {GlobalContext} from '../../contexts/global';
 
-export default function ShopItem({route}) {
+export default function ShopItem({route, navigation}) {
   const {product} = route.params;
-
+  const [{cart}, actions] = useContext(GlobalContext);
   const [quantity, setQuantity] = useState(1);
 
   const minus = () => {
@@ -24,6 +25,25 @@ export default function ShopItem({route}) {
   const plus = () => {
     setQuantity((old) => old + 1);
   };
+
+  const add = () => {
+    const item = product;
+    item.amount = quantity;
+    if (!cart.items) {
+      const data = {};
+      data.items = [item];
+      actions.setCart(data);
+    } else {
+      const data = cart;
+      data.items.push(item);
+      actions.setCart(data);
+    }
+    navigation.navigate('ShopCart');
+  };
+
+  useEffect(() => {
+    navigation.setOptions({title: `${product.name} de ${product.flavor}`});
+  }, [product, navigation]);
 
   return (
     <>
@@ -64,7 +84,7 @@ export default function ShopItem({route}) {
             <Icon name="plus" color="#5c2f0c" size={30} />
           </TouchableOpacity>
         </View>
-        <CustomButton type="custom">
+        <CustomButton type="custom" onPress={add}>
           <View style={styles.button}>
             <Text style={styles.buttonText}>Adicionar</Text>
             <Text style={[styles.buttonText, {fontFamily: 'Roboto-Regular'}]}>

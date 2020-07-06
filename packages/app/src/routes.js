@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -10,12 +10,15 @@ import SignUp from './screens/SignUp';
 import Profile from './screens/Profile';
 import ShopHome from './screens/ShopHome';
 import ShopItem from './screens/ShopItem';
+import ShopCart from './screens/ShopCart';
+import {GlobalContext} from './contexts/global';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const Shop = createStackNavigator();
 
 function BottomTabRoutes() {
+  const [{cart}] = useContext(GlobalContext);
   return (
     <BottomTab.Navigator
       tabBarOptions={{
@@ -30,6 +33,17 @@ function BottomTabRoutes() {
           tabBarIcon: () => <Icon name="home" size={30} color="#fff" />,
         }}
       />
+      {cart.items && (
+        <BottomTab.Screen
+          name="ShopCart"
+          component={ShopCart}
+          options={{
+            tabBarIcon: () => (
+              <Icon name="shopping-cart" size={30} color="#fff" />
+            ),
+          }}
+        />
+      )}
       <BottomTab.Screen
         name="Profile"
         component={Profile}
@@ -58,6 +72,7 @@ function ShopRoutes() {
         }}
       />
       <Shop.Screen name="ShopItem" component={ShopItem} />
+      <Shop.Screen name="ShopCart" component={ShopCart} />
     </Shop.Navigator>
   );
 }
