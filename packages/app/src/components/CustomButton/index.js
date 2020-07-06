@@ -2,10 +2,20 @@ import React from 'react';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {Text, StyleSheet} from 'react-native';
 
-export default function CustomButton({onPress, color = 'primary', children}) {
+export default function CustomButton({
+  onPress,
+  color = 'primary',
+  type = 'default',
+  children,
+}) {
   return (
     <TouchableHighlight style={styles[color]} onPress={onPress}>
-      <Text style={styles.buttonText}>{children}</Text>
+      <>
+        {type === 'default' && (
+          <Text style={styles.buttonText}>{children}</Text>
+        )}
+        {type === 'custom' && children}
+      </>
     </TouchableHighlight>
   );
 }

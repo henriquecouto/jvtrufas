@@ -67,7 +67,7 @@ export default function ShopHome({navigation}) {
       contentContainerStyle={styles.root}
       data={items}
       renderItem={({item}) => {
-        return <Product product={item} />;
+        return <Product product={item} navigation={navigation} />;
       }}
       keyExtractor={(item) => item._id}
     />

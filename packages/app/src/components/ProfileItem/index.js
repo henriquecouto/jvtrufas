@@ -9,7 +9,7 @@ export default function ProfileItem({value, icon, name}) {
         <Icon name={icon} size={30} color="#fff" />
       </View>
       <View>
-        <Text>{name}</Text>
+        <Text style={styles.name}>{name}</Text>
         <Text style={styles.value}>{value}</Text>
       </View>
     </View>
@@ -41,8 +41,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ff6600',
     marginRight: 20,
   },
+  name: {color: '#5c2f0c'},
   value: {
     fontSize: 20,
     fontFamily: 'FredokaOne-Regular',
+    color: '#5c2f0c',
   },
 });

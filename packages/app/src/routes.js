@@ -9,6 +9,7 @@ import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 import Profile from './screens/Profile';
 import ShopHome from './screens/ShopHome';
+import ShopItem from './screens/ShopItem';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -56,6 +57,7 @@ function ShopRoutes() {
           title: 'Fazer Encomenda',
         }}
       />
+      <Shop.Screen name="ShopItem" component={ShopItem} />
     </Shop.Navigator>
   );
 }
