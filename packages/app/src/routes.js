@@ -18,7 +18,7 @@ const BottomTab = createBottomTabNavigator();
 const Shop = createStackNavigator();
 
 function BottomTabRoutes() {
-  const [{cart}] = useContext(GlobalContext);
+  // const [{cart}] = useContext(GlobalContext);
   return (
     <BottomTab.Navigator
       tabBarOptions={{
@@ -33,7 +33,7 @@ function BottomTabRoutes() {
           tabBarIcon: () => <Icon name="home" size={30} color="#fff" />,
         }}
       />
-      {cart.items && (
+      {/* {cart.items && (
         <BottomTab.Screen
           name="ShopCart"
           component={ShopCart}
@@ -43,7 +43,7 @@ function BottomTabRoutes() {
             ),
           }}
         />
-      )}
+      )} */}
       <BottomTab.Screen
         name="Profile"
         component={Profile}
@@ -72,7 +72,6 @@ function ShopRoutes() {
         }}
       />
       <Shop.Screen name="ShopItem" component={ShopItem} />
-      <Shop.Screen name="ShopCart" component={ShopCart} />
     </Shop.Navigator>
   );
 }
@@ -85,6 +84,7 @@ export default function Routes() {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Home" component={BottomTabRoutes} />
         <Stack.Screen name="Shop" component={ShopRoutes} />
+        <Stack.Screen name="ShopCart" component={ShopCart} />
       </Stack.Navigator>
     </NavigationContainer>
   );

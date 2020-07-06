@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     padding: 20,
+    marginVertical: 10,
   },
   image: {
     flex: 1,
