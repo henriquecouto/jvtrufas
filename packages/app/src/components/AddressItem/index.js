@@ -3,7 +3,13 @@ import {Text, View, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import CustomButton from '../CustomButton';
 
-export default function AddressItem({street, neighborhood, landmark, remove}) {
+export default function AddressItem({
+  street,
+  neighborhood,
+  landmark,
+  remove,
+  type = 'default',
+}) {
   return (
     <View style={styles.root}>
       <View style={styles.row}>
@@ -16,9 +22,11 @@ export default function AddressItem({street, neighborhood, landmark, remove}) {
           <Text style={styles.info}>{landmark}</Text>
         </View>
       </View>
-      <View style={{width: '100%'}}>
-        <CustomButton onPress={remove}>Remover</CustomButton>
-      </View>
+      {type === 'default' && (
+        <View style={{width: '100%'}}>
+          <CustomButton onPress={remove}>Remover</CustomButton>
+        </View>
+      )}
     </View>
   );
 }

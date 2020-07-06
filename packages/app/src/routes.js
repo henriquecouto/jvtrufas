@@ -13,6 +13,7 @@ import ShopItem from './screens/ShopItem';
 import CartHome from './screens/CartHome';
 import SelectAddress from './screens/SelectAddress';
 import AddressesHome from './screens/AddressesHome';
+import AddAddress from './screens/AddAddress';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -103,6 +104,11 @@ function AddressesRoutes() {
         name="AddressHome"
         component={AddressesHome}
         options={{title: 'Meus endereços'}}
+      />
+      <Addresses.Screen
+        name="AddAddress"
+        component={AddAddress}
+        options={{title: 'Adicionar Endereço'}}
       />
     </Addresses.Navigator>
   );
