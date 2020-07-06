@@ -7,6 +7,6 @@ const AddressSchema = new mongoose.Schema({
 });
 
 module.exports = {
-  // Address: mongoose.model("Address", AddressSchema),
+  Address: mongoose.model("Address", AddressSchema),
   AddressSchema,
 };
