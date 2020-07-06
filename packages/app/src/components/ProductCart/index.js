@@ -3,30 +3,36 @@ import {Text, StyleSheet, View, Dimensions, Image, Button} from 'react-native';
 import parsePrice from '../../helpers/parsePrice';
 import {baseURL} from '../../../api';
 
+import CustomButton from '../CustomButton';
+
 export default function ProductCart({product, removeItem}) {
   return (
     <View style={styles.root}>
-      {product.photos[0] && (
-        <Image
-          style={styles.image}
-          source={{uri: `${baseURL}${product.photos[0]}`}}
-        />
-      )}
-      <View>
-        <Text
-          style={[
-            styles.title,
-            product.photos[0] && {
-              width: Dimensions.get('window').width - 180,
-            },
-          ]}>
-          {product.name} de {product.flavor}
-        </Text>
-        <Text style={styles.details}>{product.amount} unidades</Text>
-        <Text style={styles.details}>
-          {parsePrice(product.price * product.amount)}
-        </Text>
-        <Button onPress={removeItem()} title="Remover" />
+      <View style={styles.row}>
+        {product.photos[0] && (
+          <Image
+            style={styles.image}
+            source={{uri: `${baseURL}${product.photos[0]}`}}
+          />
+        )}
+        <View style={styles.info}>
+          <Text
+            style={[
+              styles.title,
+              product.photos[0] && {
+                width: Dimensions.get('window').width - 180,
+              },
+            ]}>
+            {product.name} de {product.flavor}
+          </Text>
+          <Text style={styles.details}>{product.amount} unidades</Text>
+          <Text style={styles.details}>
+            {parsePrice(product.price * product.amount)}
+          </Text>
+        </View>
+      </View>
+      <View style={{width: '100%'}}>
+        <CustomButton onPress={removeItem()}>Remover</CustomButton>
       </View>
     </View>
   );
@@ -34,7 +40,6 @@ export default function ProductCart({product, removeItem}) {
 
 const styles = StyleSheet.create({
   root: {
-    flexDirection: 'row',
     // width: '100%',
     alignItems: 'center',
     marginVertical: 10,
@@ -52,18 +57,17 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  row: {flexDirection: 'row'},
   image: {
     borderRadius: 100,
-    // backgroundColor: '#ff6600',
     marginRight: 20,
     height: 100,
     width: 100,
-    flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
   },
   info: {
-    flexDirection: 'row',
+    flex: 1,
   },
   title: {
     fontSize: 25,

@@ -20,9 +20,11 @@ export default function Home({navigation}) {
         {cart.items && (
           <LargeButton
             header="Seu carrinho 🛒"
-            title={`Você tem ${cart.items.length} itens prontos para pedir`}
+            title={`Você tem ${cart.items.length} ${
+              cart.items.length > 1 ? 'itens prontos' : 'item pronto'
+            } para pedir`}
             subtitle="Ver agora"
-            onPress={() => navigation.navigate('ShopCart')}
+            onPress={() => navigation.navigate('CartHome')}
           />
         )}
       </View>

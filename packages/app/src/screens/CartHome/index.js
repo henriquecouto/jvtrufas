@@ -1,11 +1,10 @@
 import React, {useContext} from 'react';
-import {StyleSheet, View, SafeAreaView} from 'react-native';
-import {FlatList, ScrollView} from 'react-native-gesture-handler';
+import {StyleSheet} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
 import {GlobalContext} from '../../contexts/global';
 import ProductCart from '../../components/ProductCart';
-import Header from '../../components/Header';
 
-export default function ShopCart() {
+export default function CartHome() {
   const [{cart}, actions] = useContext(GlobalContext);
 
   const removeItem = (index) => () => {
@@ -22,7 +21,6 @@ export default function ShopCart() {
     <FlatList
       contentContainerStyle={styles.root}
       data={cart.items}
-      ListHeaderComponent={<Header title="Seu carrinho" />}
       renderItem={({item, index}) => {
         return (
           <ProductCart product={item} removeItem={() => removeItem(index)} />

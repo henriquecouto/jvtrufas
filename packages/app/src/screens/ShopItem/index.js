@@ -38,7 +38,8 @@ export default function ShopItem({route, navigation}) {
       data.items.push(item);
       actions.setCart(data);
     }
-    navigation.navigate('ShopCart');
+    navigation.pop();
+    navigation.navigate('CartHome');
   };
 
   useEffect(() => {

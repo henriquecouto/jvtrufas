@@ -10,15 +10,16 @@ import SignUp from './screens/SignUp';
 import Profile from './screens/Profile';
 import ShopHome from './screens/ShopHome';
 import ShopItem from './screens/ShopItem';
-import ShopCart from './screens/ShopCart';
+import CartHome from './screens/CartHome';
 import {GlobalContext} from './contexts/global';
+import {Text} from 'react-native';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const Shop = createStackNavigator();
+const Cart = createStackNavigator();
 
 function BottomTabRoutes() {
-  // const [{cart}] = useContext(GlobalContext);
   return (
     <BottomTab.Navigator
       tabBarOptions={{
@@ -33,17 +34,6 @@ function BottomTabRoutes() {
           tabBarIcon: () => <Icon name="home" size={30} color="#fff" />,
         }}
       />
-      {/* {cart.items && (
-        <BottomTab.Screen
-          name="ShopCart"
-          component={ShopCart}
-          options={{
-            tabBarIcon: () => (
-              <Icon name="shopping-cart" size={30} color="#fff" />
-            ),
-          }}
-        />
-      )} */}
       <BottomTab.Screen
         name="Profile"
         component={Profile}
@@ -76,15 +66,41 @@ function ShopRoutes() {
   );
 }
 
+function CartRoutes() {
+  return (
+    <Cart.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          fontFamily: 'FredokaOne-Regular',
+        },
+        headerTintColor: '#5c2f0c',
+      }}>
+      <Cart.Screen
+        name="CartHome"
+        component={CartHome}
+        options={{title: 'Seu carrinho 🛒'}}
+      />
+    </Cart.Navigator>
+  );
+}
+
 export default function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode="none" initialRouteName={'Home'}>
+      <Stack.Navigator
+        headerMode="none"
+        initialRouteName={'Home'}
+        screenOptions={{
+          headerTitleStyle: {
+            fontFamily: 'FredokaOne-Regular',
+          },
+          headerTintColor: '#5c2f0c',
+        }}>
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Home" component={BottomTabRoutes} />
         <Stack.Screen name="Shop" component={ShopRoutes} />
-        <Stack.Screen name="ShopCart" component={ShopCart} />
+        <Stack.Screen name="CartHome" component={CartRoutes} />
       </Stack.Navigator>
     </NavigationContainer>
   );

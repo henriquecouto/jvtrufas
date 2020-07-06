@@ -16,7 +16,7 @@ export default function Product({product, navigation}) {
             source={{uri: `${baseURL}${product.photos[0]}`}}
           />
         )}
-        <View>
+        <View style={styles.info}>
           <Text
             style={[
               styles.title,
@@ -58,12 +58,11 @@ const styles = StyleSheet.create({
     marginRight: 20,
     height: 100,
     width: 100,
-    flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
   },
   info: {
-    flexDirection: 'row',
+    flex: 1,
   },
   title: {
     fontSize: 25,
