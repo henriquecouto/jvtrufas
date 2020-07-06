@@ -47,7 +47,13 @@ export const GlobalContextProvider = ({children}) => {
     }
   };
 
-  const actions = {login, logout, setCart, clearCart};
+  const updateAddresses = async (addresses) => {
+    const newAuth = globalState.auth;
+    newAuth.user.addresses = addresses;
+    await login(newAuth);
+  };
+
+  const actions = {login, logout, setCart, clearCart, updateAddresses};
 
   const loadAuth = async () => {
     try {

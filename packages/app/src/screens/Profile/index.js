@@ -29,6 +29,9 @@ export default function Profile({navigation}) {
         <ProfileItem value={auth.user.name} icon="user" name="Nome" />
         <ProfileItem value={auth.user.email} icon="mail" name="Email" />
         <ProfileItem value={auth.user.whatsapp} icon="phone" name="WhatsApp" />
+        <CustomButton onPress={() => navigation.navigate('Addresses')}>
+          Meus endereços
+        </CustomButton>
         <CustomButton onPress={actions.logout}>Sair</CustomButton>
       </View>
     </ScrollView>

@@ -12,11 +12,13 @@ import ShopHome from './screens/ShopHome';
 import ShopItem from './screens/ShopItem';
 import CartHome from './screens/CartHome';
 import SelectAddress from './screens/SelectAddress';
+import AddressesHome from './screens/AddressesHome';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const Shop = createStackNavigator();
 const Cart = createStackNavigator();
+const Addresses = createStackNavigator();
 
 function BottomTabRoutes() {
   return (
@@ -88,6 +90,24 @@ function CartRoutes() {
   );
 }
 
+function AddressesRoutes() {
+  return (
+    <Addresses.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          fontFamily: 'FredokaOne-Regular',
+        },
+        headerTintColor: '#5c2f0c',
+      }}>
+      <Addresses.Screen
+        name="AddressHome"
+        component={AddressesHome}
+        options={{title: 'Meus endereços'}}
+      />
+    </Addresses.Navigator>
+  );
+}
+
 export default function Routes() {
   return (
     <NavigationContainer>
@@ -105,6 +125,7 @@ export default function Routes() {
         <Stack.Screen name="Home" component={BottomTabRoutes} />
         <Stack.Screen name="Shop" component={ShopRoutes} />
         <Stack.Screen name="CartHome" component={CartRoutes} />
+        <Stack.Screen name="Addresses" component={AddressesRoutes} />
       </Stack.Navigator>
     </NavigationContainer>
   );
