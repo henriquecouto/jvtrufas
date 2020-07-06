@@ -1,6 +1,7 @@
 import React, {createContext, useState, useEffect} from 'react';
 import Storage from '../helpers/Storage';
 import api from '../../api';
+import {add} from 'react-native-reanimated';
 
 export const GlobalContext = createContext();
 
@@ -53,7 +54,20 @@ export const GlobalContextProvider = ({children}) => {
     await login(newAuth);
   };
 
-  const actions = {login, logout, setCart, clearCart, updateAddresses};
+  const setCartAddress = (address) => {
+    const newCart = globalState.cart;
+    newCart.address = address;
+    setCart(newCart);
+  };
+
+  const actions = {
+    login,
+    logout,
+    setCart,
+    clearCart,
+    updateAddresses,
+    setCartAddress,
+  };
 
   const loadAuth = async () => {
     try {

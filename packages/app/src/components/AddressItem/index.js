@@ -2,32 +2,38 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import CustomButton from '../CustomButton';
+import {TouchableHighlight} from 'react-native-gesture-handler';
 
 export default function AddressItem({
   street,
   neighborhood,
   landmark,
   remove,
-  type = 'default',
+  selected,
+  onPress,
 }) {
   return (
-    <View style={styles.root}>
-      <View style={styles.row}>
-        <View style={styles.icon}>
-          <Icon name="map-pin" size={30} color="#fff" />
+    <TouchableHighlight
+      onPress={onPress}
+      style={[styles.root, selected && styles.selected]}>
+      <>
+        <View style={styles.row}>
+          <View style={styles.icon}>
+            <Icon name="map-pin" size={30} color="#fff" />
+          </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.street}>{street}</Text>
+            <Text style={styles.info}>{neighborhood}</Text>
+            <Text style={styles.info}>{landmark}</Text>
+          </View>
         </View>
-        <View style={styles.infoContainer}>
-          <Text style={styles.street}>{street}</Text>
-          <Text style={styles.info}>{neighborhood}</Text>
-          <Text style={styles.info}>{landmark}</Text>
-        </View>
-      </View>
-      {type === 'default' && (
-        <View style={{width: '100%'}}>
-          <CustomButton onPress={remove}>Remover</CustomButton>
-        </View>
-      )}
-    </View>
+        {remove && (
+          <View style={{width: '100%'}}>
+            <CustomButton onPress={remove}>Remover</CustomButton>
+          </View>
+        )}
+      </>
+    </TouchableHighlight>
   );
 }
 
@@ -49,6 +55,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  selected: {backgroundColor: '#ffd1b3'},
   row: {flexDirection: 'row', alignItems: 'flex-start'},
   icon: {
     padding: 10,
