@@ -11,8 +11,7 @@ import Profile from './screens/Profile';
 import ShopHome from './screens/ShopHome';
 import ShopItem from './screens/ShopItem';
 import CartHome from './screens/CartHome';
-import {GlobalContext} from './contexts/global';
-import {Text} from 'react-native';
+import SelectAddress from './screens/SelectAddress';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -79,6 +78,11 @@ function CartRoutes() {
         name="CartHome"
         component={CartHome}
         options={{title: 'Seu carrinho 🛒'}}
+      />
+      <Cart.Screen
+        name="SelectAddress"
+        component={SelectAddress}
+        options={{title: 'Selecionar endereço'}}
       />
     </Cart.Navigator>
   );

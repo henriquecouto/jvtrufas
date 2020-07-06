@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     height: 160,
-    backgroundColor: '#eee',
+    backgroundColor: '#5c2f0c44',
   },
   changer: {
     flexDirection: 'row',
