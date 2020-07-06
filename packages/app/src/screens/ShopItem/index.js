@@ -56,13 +56,13 @@ export default function ShopItem({route}) {
       </ScrollView>
       <View style={styles.footer}>
         <View style={styles.changer}>
-          <TouchableHighlight onPress={minus} style={styles.changerLeft}>
+          <TouchableOpacity onPress={minus} style={styles.changerLeft}>
             <Icon name="minus" color="#5c2f0c" size={30} />
-          </TouchableHighlight>
+          </TouchableOpacity>
           <Text style={styles.changerText}>{quantity}</Text>
-          <TouchableHighlight onPress={plus} style={styles.changerRight}>
+          <TouchableOpacity onPress={plus} style={styles.changerRight}>
             <Icon name="plus" color="#5c2f0c" size={30} />
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
         <CustomButton type="custom">
           <View style={styles.button}>
