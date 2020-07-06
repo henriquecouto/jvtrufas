@@ -1,17 +1,23 @@
 import React from 'react';
-import {Text, StyleSheet, View, Dimensions} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import {Text, StyleSheet, View, Dimensions, Image} from 'react-native';
 import parsePrice from '../../helpers/parsePrice';
+import {baseURL} from '../../../api';
 
 export default function Product({product}) {
-  console.log(typeof product.price);
   return (
     <View style={styles.root}>
-      <View style={styles.icon}>
-        <Icon name="slash" size={70} color="#fff" />
-      </View>
-      <View style={styles.info}>
-        <Text style={styles.title}>
+      {product.photos[0] && (
+        <Image
+          style={styles.image}
+          source={{uri: `${baseURL}${product.photos[0]}`}}
+        />
+      )}
+      <View>
+        <Text
+          style={[
+            styles.title,
+            product.photos[0] && {width: Dimensions.get('window').width - 180},
+          ]}>
           {product.name} de {product.flavor}
         </Text>
         <Text style={styles.price}>{parsePrice(product.price)}</Text>
@@ -39,18 +45,20 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  icon: {
+  image: {
     borderRadius: 100,
-    backgroundColor: '#ff6600',
+    // backgroundColor: '#ff6600',
     marginRight: 20,
     height: 100,
     width: 100,
+    flex: 1,
+    resizeMode: 'cover',
     justifyContent: 'center',
-    alignItems: 'center',
   },
-  info: {},
+  info: {
+    flexDirection: 'row',
+  },
   title: {
-    width: Dimensions.get('window').width - 180,
     fontSize: 25,
     fontFamily: 'FredokaOne-Regular',
   },

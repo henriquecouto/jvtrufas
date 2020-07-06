@@ -14,8 +14,6 @@ export default function ShopHome({navigation}) {
 
   const [{auth}] = useContext(GlobalContext);
 
-  console.log({auth});
-
   const loadItems = useCallback(async () => {
     if (auth.token) {
       try {
@@ -71,7 +69,7 @@ export default function ShopHome({navigation}) {
       renderItem={({item}) => {
         return <Product product={item} />;
       }}
-      keyExtractor={({index}) => index}
+      keyExtractor={(item) => item._id}
     />
   );
 }
