@@ -80,6 +80,7 @@ export default function ShopItem({route}) {
 const styles = StyleSheet.create({
   body: {
     padding: 20,
+    marginBottom: 160,
   },
   photo: {
     width: Dimensions.get('window').width,
@@ -100,7 +101,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    // backgroundColor: '#5c2f0c',
+    height: 160,
+    backgroundColor: '#eee',
   },
   changer: {
     flexDirection: 'row',
