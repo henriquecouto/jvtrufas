@@ -31,9 +31,11 @@ export default function ProductCart({product, removeItem}) {
           </Text>
         </View>
       </View>
-      <View style={{width: '100%'}}>
-        <CustomButton onPress={removeItem()}>Remover</CustomButton>
-      </View>
+      {removeItem && (
+        <View style={{width: '100%'}}>
+          <CustomButton onPress={removeItem()}>Remover</CustomButton>
+        </View>
+      )}
     </View>
   );
 }

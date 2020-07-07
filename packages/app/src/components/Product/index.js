@@ -8,7 +8,9 @@ export default function Product({product, navigation}) {
   return (
     <TouchableHighlight
       style={styles.root}
-      onPress={() => navigation.navigate('ShopItem', {product})}>
+      onPress={
+        navigation && (() => navigation.navigate('ShopItem', {product}))
+      }>
       <>
         {product.photos[0] && (
           <Image

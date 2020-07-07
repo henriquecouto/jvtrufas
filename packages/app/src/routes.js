@@ -14,6 +14,7 @@ import CartHome from './screens/CartHome';
 import SelectAddress from './screens/SelectAddress';
 import AddressesHome from './screens/AddressesHome';
 import AddAddress from './screens/AddAddress';
+import CartConfirm from './screens/CartConfirm';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -86,6 +87,11 @@ function CartRoutes() {
         name="SelectAddress"
         component={SelectAddress}
         options={{title: 'Selecionar endereço'}}
+      />
+      <Cart.Screen
+        name="CartConfirm"
+        component={CartConfirm}
+        options={{title: 'Confirmar Pedido'}}
       />
     </Cart.Navigator>
   );

@@ -33,7 +33,7 @@ export default function SelectAddress({navigation}) {
             onPress={() => navigation.navigate('CartConfirm')}>
             <View style={styles.buttonNext}>
               <Text style={styles.buttonText}>Confirmar pedido</Text>
-              <Icon name="check" size={25} color="#fff" />
+              <Icon name="chevron-right" size={25} color="#fff" />
             </View>
           </CustomButton>
         </View>

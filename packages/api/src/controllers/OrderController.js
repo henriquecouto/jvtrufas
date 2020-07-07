@@ -3,7 +3,7 @@ const { Item } = require("../models/ItemModel");
 
 exports.createOrder = async (req, res) => {
   req.body.payment = undefined;
-  req.body.status = undefined;
+  // req.body.status = undefined;
   req.body.evaluation = undefined;
 
   try {
