@@ -1,7 +1,7 @@
-import React, {createContext, useState, useEffect} from 'react';
+import React, {createContext, useState, useEffect, useCallback} from 'react';
 import Storage from '../helpers/Storage';
 import api from '../../api';
-import {add} from 'react-native-reanimated';
+import {or} from 'react-native-reanimated';
 
 export const GlobalContext = createContext();
 
@@ -9,6 +9,7 @@ export const GlobalContextProvider = ({children}) => {
   const [globalState, setGlobalState] = useState({
     auth: {},
     cart: {},
+    orders: [],
   });
 
   const login = async (data) => {
@@ -24,7 +25,8 @@ export const GlobalContextProvider = ({children}) => {
     try {
       await Storage.removeItem('auth');
       await Storage.removeItem('cart');
-      setGlobalState((old) => ({auth: {}, cart: {}}));
+      await Storage.removeItem('orders');
+      setGlobalState((old) => ({auth: {}, cart: {}, orders: []}));
     } catch (error) {
       console.log('global start logout error: ', error);
     }
@@ -60,6 +62,21 @@ export const GlobalContextProvider = ({children}) => {
     setCart(newCart);
   };
 
+  const setOrders = async (orders) => {
+    try {
+      await Storage.setItem('orders', orders);
+      setGlobalState((old) => ({...old, orders}));
+    } catch (error) {
+      console.log('error set orders: ', error);
+    }
+  };
+
+  const addOrder = (order) => {
+    const newOrders = globalState.orders;
+    newOrders.push(order);
+    setOrders(newOrders);
+  };
+
   const actions = {
     login,
     logout,
@@ -67,6 +84,7 @@ export const GlobalContextProvider = ({children}) => {
     clearCart,
     updateAddresses,
     setCartAddress,
+    addOrder,
   };
 
   const loadAuth = async () => {
@@ -87,10 +105,29 @@ export const GlobalContextProvider = ({children}) => {
     }
   };
 
+  const loadOrders = useCallback(async () => {
+    try {
+      if (globalState.auth.token) {
+        const {data} = await api.get('/purchaser/order', {
+          headers: {Authorization: `Bearer ${globalState.auth.token}`},
+        });
+        setOrders(data.orders);
+      }
+    } catch (error) {
+      console.log('load orders error: ', error.response.data);
+      const orders = await Storage.getItem('orders');
+      setOrders(orders);
+    }
+  }, [globalState.auth]);
+
   useEffect(() => {
     loadAuth();
     loadCart();
   }, []);
+
+  useEffect(() => {
+    loadOrders();
+  }, [loadOrders]);
 
   return (
     <GlobalContext.Provider value={[globalState, actions]}>

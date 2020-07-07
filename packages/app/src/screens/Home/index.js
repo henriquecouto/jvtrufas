@@ -1,11 +1,11 @@
 import React, {useContext} from 'react';
-import {ScrollView, View, StyleSheet} from 'react-native';
+import {ScrollView, View, StyleSheet, Text} from 'react-native';
 import Header from '../../components/Header';
 import LargeButton from '../../components/LargeButton';
 import {GlobalContext} from '../../contexts/global';
 
 export default function Home({navigation}) {
-  const [{cart}] = useContext(GlobalContext);
+  const [{cart, orders}] = useContext(GlobalContext);
 
   return (
     <ScrollView>
@@ -27,6 +27,7 @@ export default function Home({navigation}) {
             onPress={() => navigation.navigate('CartHome')}
           />
         )}
+        <Text>{orders.length}</Text>
       </View>
     </ScrollView>
   );

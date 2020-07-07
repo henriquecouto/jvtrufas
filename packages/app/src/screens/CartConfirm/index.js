@@ -54,11 +54,12 @@ export default function CartConfirm({navigation}) {
       order.status = 'waiting';
       order.purchaserId = auth.user._id;
 
-      await api.post('/purchaser/order', order, {
+      const {data} = await api.post('/purchaser/order', order, {
         headers: {Authorization: `Bearer ${auth.token}`},
       });
 
       actions.clearCart();
+      actions.addOrder(data.order);
       navigation.navigate('Home');
     } catch (error) {
       console.log('error create order: ', error.response.data);
