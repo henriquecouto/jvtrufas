@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const autoIncrement = require("mongoose-auto-increment");
 const bodyParser = require("body-parser");
 const { project } = require("jvtrufas-common");
 
@@ -12,6 +13,7 @@ mongoose.connect("mongodb://localhost:27017/jvtrufas", {
 });
 
 const db = mongoose.connection;
+autoIncrement.initialize(db);
 db.on("error", (error) => {
   console.log(error);
 });

@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
+const autoIncrement = require("mongoose-auto-increment");
 const { ItemSchema } = require("./ItemModel");
 const { AddressSchema } = require("./AddressModel");
 
 const OrderSchema = new mongoose.Schema({
   purchaserId: { type: mongoose.SchemaTypes.ObjectId, required: true },
+  orderNumber: { type: Number, required: true },
   items: { type: [ItemSchema], required: true },
   type: { type: String, enum: ["scheduled", "instant"], required: true },
   deliveryDate: { type: Date, required: true },
@@ -17,6 +19,13 @@ const OrderSchema = new mongoose.Schema({
   },
   evaluation: { type: mongoose.SchemaTypes.ObjectId },
   registrationDate: { type: Date, default: Date.now() },
+});
+
+OrderSchema.plugin(autoIncrement.plugin, {
+  model: "Order",
+  field: "orderNumber",
+  startAt: 1000,
+  incrementBy: 1,
 });
 
 module.exports = { Order: mongoose.model("Order", OrderSchema) };
