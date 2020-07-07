@@ -32,6 +32,8 @@
       "**/@react-native-community/async-storage/**",
       "**/@react-native-community/picker",
       "**/@react-native-community/picker/**",
+      "**/@react-native-community/checkbox",
+      "**/@react-native-community/checkbox/**",
       "**/@react-native-community/datetimepicker",
       "**/@react-native-community/datetimepicker/**",
       "**/react-native-reanimated",

@@ -2,8 +2,13 @@ import React, {useContext, useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import CheckBox from '@react-native-community/checkbox';
 import {GlobalContext} from '../../contexts/global';
-import {ScrollView, TouchableHighlight} from 'react-native-gesture-handler';
+import {
+  ScrollView,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 import AddressItem from '../../components/AddressItem';
 import CustomButton from '../../components/CustomButton';
 import Icon from 'react-native-vector-icons/Feather';
@@ -13,6 +18,9 @@ import api from '../../../api';
 
 import 'intl';
 import 'intl/locale-data/jsonp/pt-BR';
+
+const minimumDate = new Date();
+minimumDate.setDate(minimumDate.getDate() + 10);
 
 export default function CartConfirm({navigation}) {
   const [{cart, auth}, actions] = useContext(GlobalContext);
@@ -32,6 +40,8 @@ export default function CartConfirm({navigation}) {
   const handleType = (value) => {
     if (value === 'instant') {
       setDate(new Date());
+    } else {
+      setDate(minimumDate);
     }
     setType(value);
   };
@@ -58,23 +68,41 @@ export default function CartConfirm({navigation}) {
   return (
     <>
       <ScrollView contentContainerStyle={styles.root}>
-        <Text style={styles.title}>Entrega</Text>
-        <Text style={styles.date}>
-          {
-            new Intl.DateTimeFormat('pt-BR').format(date)
-            // date.toLocaleDateString('pt-br', {
-            //   dateStyle: 'medium',
-            //   timeZone: 'America/Recife',
-            // }
-            // )
-          }
-        </Text>
-        <View style={styles.input}>
-          <Picker selectedValue={type} onValueChange={handleType}>
-            <Picker.Item label="Hoje" value="instant" />
-            <Picker.Item label="Agendar" value="scheduled" />
-          </Picker>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Entrega</Text>
+          <View style={styles.checkbox}>
+            <TouchableWithoutFeedback
+              style={styles.checkbox}
+              onPress={() => handleType('instant')}>
+              <CheckBox
+                tintColors={{true: '#ff6600'}}
+                value={type === 'instant'}
+              />
+              <Text>Hoje</Text>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              style={styles.checkbox}
+              onPress={() => handleType('scheduled')}>
+              <CheckBox
+                tintColors={{true: '#ff6600'}}
+                value={type === 'scheduled'}
+              />
+              <Text>Agendar</Text>
+            </TouchableWithoutFeedback>
+          </View>
         </View>
+        {type === 'scheduled' && (
+          <Text style={styles.date}>
+            {new Intl.DateTimeFormat('pt-BR').format(date)}
+          </Text>
+        )}
+
+        {/* <View style={styles.input}>
+          <Picker selectedValue={type} onValueChange={handleType}>
+          <Picker.Item label="Hoje" value="instant" />
+          <Picker.Item label="Agendar" value="scheduled" />
+          </Picker>
+        </View> */}
 
         {type === 'scheduled' && (
           <CustomButton onPress={() => setShowDatePicker(true)}>
@@ -87,6 +115,7 @@ export default function CartConfirm({navigation}) {
             value={date}
             mode="date"
             display="calendar"
+            minimumDate={minimumDate}
             onChange={(event, value) => {
               setShowDatePicker(false);
               setDate(value);
@@ -125,6 +154,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#5c2f0c',
     marginVertical: 15,
   },
+  titleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   title: {
     fontFamily: 'FredokaOne-Regular',
     fontSize: 30,
@@ -156,5 +189,9 @@ const styles = StyleSheet.create({
     padding: 5,
     color: '#5c2f0c',
     marginVertical: 10,
+  },
+  checkbox: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
