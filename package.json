@@ -32,6 +32,8 @@
       "**/@react-native-community/async-storage/**",
       "**/@react-native-community/picker",
       "**/@react-native-community/picker/**",
+      "**/@react-native-community/datetimepicker",
+      "**/@react-native-community/datetimepicker/**",
       "**/react-native-reanimated",
       "**/react-native-reanimated/**",
       "**/react-native-safe-area-context",
@@ -41,7 +43,9 @@
       "**/axios",
       "**/axios/**",
       "**/react-native-vector-icons",
-      "**/react-native-vector-icons/**"
+      "**/react-native-vector-icons/**",
+      "**/intl",
+      "**/intl/**"
     ],
     "packages": [
       "packages/*"

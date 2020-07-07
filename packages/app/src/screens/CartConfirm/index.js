@@ -1,8 +1,9 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Picker} from '@react-native-community/picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import {GlobalContext} from '../../contexts/global';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableHighlight} from 'react-native-gesture-handler';
 import AddressItem from '../../components/AddressItem';
 import CustomButton from '../../components/CustomButton';
 import Icon from 'react-native-vector-icons/Feather';
@@ -10,11 +11,15 @@ import ProductCart from '../../components/ProductCart';
 import parsePrice from '../../helpers/parsePrice';
 import api from '../../../api';
 
+import 'intl';
+import 'intl/locale-data/jsonp/pt-BR';
+
 export default function CartConfirm({navigation}) {
   const [{cart, auth}, actions] = useContext(GlobalContext);
   const [total, setTotal] = useState(0);
   const [type, setType] = useState('instant');
   const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   useEffect(() => {
     let result = 0;
@@ -39,11 +44,9 @@ export default function CartConfirm({navigation}) {
       order.status = 'waiting';
       order.purchaserId = auth.user._id;
 
-      const {data} = await api.post('/purchaser/order', order, {
+      await api.post('/purchaser/order', order, {
         headers: {Authorization: `Bearer ${auth.token}`},
       });
-
-      console.log(data.order);
 
       actions.clearCart();
       navigation.navigate('Home');
@@ -56,12 +59,40 @@ export default function CartConfirm({navigation}) {
     <>
       <ScrollView contentContainerStyle={styles.root}>
         <Text style={styles.title}>Entrega</Text>
+        <Text style={styles.date}>
+          {
+            new Intl.DateTimeFormat('pt-BR').format(date)
+            // date.toLocaleDateString('pt-br', {
+            //   dateStyle: 'medium',
+            //   timeZone: 'America/Recife',
+            // }
+            // )
+          }
+        </Text>
         <View style={styles.input}>
           <Picker selectedValue={type} onValueChange={handleType}>
             <Picker.Item label="Hoje" value="instant" />
-            <Picker.Item label="Selecionar data" value="scheduled" />
+            <Picker.Item label="Agendar" value="scheduled" />
           </Picker>
         </View>
+
+        {type === 'scheduled' && (
+          <CustomButton onPress={() => setShowDatePicker(true)}>
+            Selecionar data
+          </CustomButton>
+        )}
+
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="calendar"
+            onChange={(event, value) => {
+              setShowDatePicker(false);
+              setDate(value);
+            }}
+          />
+        )}
         <View style={styles.divider} />
         <Text style={styles.title}>Pedido</Text>
         {cart.items &&
@@ -98,6 +129,11 @@ const styles = StyleSheet.create({
     fontFamily: 'FredokaOne-Regular',
     fontSize: 30,
     color: '#5c2f0c',
+  },
+  date: {
+    fontSize: 20,
+    color: '#5c2f0c',
+    fontFamily: 'Roboto-Regular',
   },
   footer: {
     padding: 10,
