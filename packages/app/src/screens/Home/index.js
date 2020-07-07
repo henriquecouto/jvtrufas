@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import LargeButton from '../../components/LargeButton';
 import {GlobalContext} from '../../contexts/global';
 import {FlatList} from 'react-native-gesture-handler';
+import OrderListItem from '../../components/OrderListItem';
 
 export default function Home({navigation}) {
   const [{cart, orders}] = useContext(GlobalContext);
@@ -30,12 +31,14 @@ export default function Home({navigation}) {
               onPress={() => navigation.navigate('CartHome')}
             />
           )}
+          {!!orders.length && (
+            <Text style={styles.orders}>Minhas encomendas</Text>
+          )}
         </View>
       )}
       data={orders}
       renderItem={({item}) => {
-        console.log(item);
-        return <Text>{JSON.stringify(item)}</Text>;
+        return <OrderListItem order={item} />;
       }}
       keyExtractor={(item) => item._id}
     />
@@ -47,5 +50,11 @@ const styles = StyleSheet.create({
     // height: '100%',
     padding: 20,
     justifyContent: 'space-evenly',
+  },
+  orders: {
+    marginVertical: 10,
+    fontSize: 30,
+    fontFamily: 'FredokaOne-Regular',
+    color: '#5c2f0c',
   },
 });
