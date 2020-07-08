@@ -38,7 +38,12 @@ export default function Home({navigation}) {
       )}
       data={orders}
       renderItem={({item}) => {
-        return <OrderListItem order={item} />;
+        return (
+          <OrderListItem
+            order={item}
+            onPress={() => navigation.navigate('OrderDetails', {order: item})}
+          />
+        );
       }}
       keyExtractor={(item) => item._id}
     />

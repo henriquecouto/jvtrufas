@@ -13,7 +13,7 @@ const statuses = {
   canceled: 'Pedido cancelado',
 };
 
-export default function OrderListItem({order}) {
+export default function OrderListItem({order, onPress}) {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function OrderListItem({order}) {
   }, [order.items]);
 
   return (
-    <TouchableHighlight onPress={() => {}} style={styles.root}>
+    <TouchableHighlight onPress={onPress} style={styles.root}>
       <>
         <View style={styles.infoContainer}>
           <Text style={styles.status}>

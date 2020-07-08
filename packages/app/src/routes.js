@@ -15,12 +15,14 @@ import SelectAddress from './screens/SelectAddress';
 import AddressesHome from './screens/AddressesHome';
 import AddAddress from './screens/AddAddress';
 import CartConfirm from './screens/CartConfirm';
+import OrderDetails from './screens/OrderDetails';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const Shop = createStackNavigator();
 const Cart = createStackNavigator();
 const Addresses = createStackNavigator();
+const Order = createStackNavigator();
 
 function BottomTabRoutes() {
   return (
@@ -120,6 +122,24 @@ function AddressesRoutes() {
   );
 }
 
+function OrderRoutes({route}) {
+  return (
+    <Order.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          fontFamily: 'FredokaOne-Regular',
+        },
+        headerTintColor: '#5c2f0c',
+      }}>
+      <Order.Screen
+        name="OrderDetails"
+        initialParams={{order: route.params.order}}
+        component={OrderDetails}
+      />
+    </Order.Navigator>
+  );
+}
+
 export default function Routes() {
   return (
     <NavigationContainer>
@@ -138,6 +158,7 @@ export default function Routes() {
         <Stack.Screen name="Shop" component={ShopRoutes} />
         <Stack.Screen name="CartHome" component={CartRoutes} />
         <Stack.Screen name="Addresses" component={AddressesRoutes} />
+        <Stack.Screen name="OrderDetails" component={OrderRoutes} />
       </Stack.Navigator>
     </NavigationContainer>
   );

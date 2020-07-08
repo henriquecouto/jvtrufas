@@ -124,14 +124,14 @@ export default function CartConfirm({navigation}) {
           />
         )}
         <View style={styles.divider} />
+        <Text style={styles.title}>Endereço</Text>
+        <AddressItem {...cart.address} />
+        <View style={styles.divider} />
         <Text style={styles.title}>Pedido</Text>
         {cart.items &&
           cart.items.map((item, index) => {
             return <ProductCart product={item} key={item._id + index} />;
           })}
-        <View style={styles.divider} />
-        <Text style={styles.title}>Endereço</Text>
-        <AddressItem {...cart.address} />
       </ScrollView>
       <View style={styles.footer}>
         <CustomButton type="custom" onPress={makeOrder}>
