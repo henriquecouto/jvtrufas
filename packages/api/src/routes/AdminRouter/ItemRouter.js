@@ -1,11 +1,12 @@
 const router = require("express").Router();
 const controller = require("../../controllers/ItemController");
+const path = require('path')
 
 // MULTER CONFIG
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "/var/www/jvtrufas/public/items/images");
+    cb(null, path.join(__dirname, '..','..','..', "/public/items/images"));
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname);
