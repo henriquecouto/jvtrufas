@@ -1,4 +1,4 @@
-package com.jvtrufas;
+package br.com.henriquecouto.jvtrufas;
 
 import com.facebook.react.ReactActivity;
 
