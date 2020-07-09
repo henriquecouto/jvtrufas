@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const autoIncrement = require("mongoose-auto-increment");
 const bodyParser = require("body-parser");
 const { project } = require("jvtrufas-common");
+const path = require("path");
 
 // MONGOOSE CONFIG
 mongoose.connect("mongodb://localhost:27017/jvtrufas", {
@@ -39,6 +40,8 @@ Email: <a href="mailto:${project.author.email}">${project.author.email}</a>
 Site: <a href="https://${project.author.url}" target="blank">${project.author.url}</a>
 `)
 );
+
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.listen(port, () =>
   console.log(`API listening on 'http://localhost:${port}'!`)
