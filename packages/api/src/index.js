@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const autoIncrement = require("mongoose-auto-increment");
 const bodyParser = require("body-parser");
 const { project } = require("jvtrufas-common");
-const serveIndex = require('serve-index');
 
 // MONGOOSE CONFIG
 mongoose.connect("mongodb://localhost:27017/jvtrufas", {
@@ -41,7 +40,7 @@ Site: <a href="https://${project.author.url}" target="blank">${project.author.ur
 `)
 );
 
-app.use('/public', express.static('public'), serveIndex('public', {'icons': true}));
+app.use('/public', express.static('public'));
 
 app.listen(port, () =>
   console.log(`API listening on 'http://localhost:${port}'!`)
