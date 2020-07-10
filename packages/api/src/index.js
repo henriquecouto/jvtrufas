@@ -41,7 +41,7 @@ Site: <a href="https://${project.author.url}" target="blank">${project.author.ur
 `)
 );
 
-app.use(express.static(path.join(__dirname, "..", "public")));
+app.use('/public', express.static(path.join(__dirname, "..", "public")));
 
 app.listen(port, () =>
   console.log(`API listening on 'http://localhost:${port}'!`)
