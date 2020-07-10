@@ -41,7 +41,7 @@ Site: <a href="https://${project.author.url}" target="blank">${project.author.ur
 `)
 );
 
-app.use(express.static(path.join(__dirname, "..", "public")));
+app.use('/public', express.static(path.join(__dirname, "..", "public")));
 
 app.get('/termos-de-uso', (req, res)=>{
   res.sendFile(path.join(__dirname, '..', 'docs/useTerms.html'))
