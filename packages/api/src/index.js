@@ -27,7 +27,6 @@ const port = 3030;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static("public"));
 
 app.use("/auth", require("./routes/UserRouter"));
 app.use("/admin", require("./routes/AdminRouter"));
