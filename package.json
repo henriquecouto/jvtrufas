@@ -47,7 +47,9 @@
       "**/react-native-vector-icons",
       "**/react-native-vector-icons/**",
       "**/intl",
-      "**/intl/**"
+      "**/intl/**",
+      "**/react-native-splash-screen",
+      "**/react-native-splash-screen/**"
     ],
     "packages": [
       "packages/*"
