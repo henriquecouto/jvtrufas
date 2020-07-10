@@ -8,6 +8,8 @@
 **/uploads/
 **/public/
 
+**/release/
+
 # Logs
 logs
 *.log

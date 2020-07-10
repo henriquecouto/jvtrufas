@@ -43,6 +43,14 @@ Site: <a href="https://${project.author.url}" target="blank">${project.author.ur
 
 app.use('/public', express.static(path.join(__dirname, "..", "public")));
 
+app.get('/termos-de-uso', (req, res)=>{
+  res.sendFile(path.join(__dirname, '..', 'docs/useTerms.html'))
+})
+
+app.get('/politicas-de-privacidade', (req, res)=>{
+  res.sendFile(path.join(__dirname, '..', 'docs/privacyPolicy.html'))
+})
+
 app.listen(port, () =>
   console.log(`API listening on 'http://localhost:${port}'!`)
 );
