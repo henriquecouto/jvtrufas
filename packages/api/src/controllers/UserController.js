@@ -14,7 +14,8 @@ exports.getNewToken = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
-  const { email, name, password, type } = req.body;
+  const { name, password, type, whatsapp } = req.body;
+  const email = req.body.email.toLowerCase();
   try {
     if (type && type !== "purchaser") {
       return res.status(400).send({
@@ -32,6 +33,10 @@ exports.createUser = async (req, res) => {
 
     if (!password) {
       return res.status(400).send({ message: "password is required" });
+    }
+
+    if (!whatsapp) {
+      return res.status(400).send({ message: "whatsapp is required" });
     }
 
     if (await User.findOne({ email })) {
@@ -54,7 +59,8 @@ exports.createUser = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { password } = req.body;
+  const email = req.body.email.toLowerCase();
   try {
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
