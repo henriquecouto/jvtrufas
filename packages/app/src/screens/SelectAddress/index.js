@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import AddressItem from '../../components/AddressItem';
@@ -9,6 +9,12 @@ import LargeButton from '../../components/LargeButton';
 
 export default function SelectAddress({navigation}) {
   const [{auth, cart}, actions] = useContext(GlobalContext);
+
+  useEffect(() => {
+    if (!auth.user.addresses.length) {
+      actions.setCartAddress(null);
+    }
+  }, [auth.user.addresses, actions]);
 
   if (!auth.user.addresses.length) {
     return (
