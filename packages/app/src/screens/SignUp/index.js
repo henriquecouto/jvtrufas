@@ -40,6 +40,11 @@ export default function SignUp({navigation}) {
       return;
     }
 
+    if (!name) {
+      setError('Insira o seu Whatsapp');
+      return;
+    }
+
     try {
       setError(null);
       const {data} = await api.post('/auth/register', {
