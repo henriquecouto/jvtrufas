@@ -51,7 +51,9 @@
       "**/react-native-splash-screen",
       "**/react-native-splash-screen/**",
       "**/react-native-modal",
-      "**/react-native-modal/**"
+      "**/react-native-modal/**",
+      "**/react-native-webview",
+      "**/react-native-webview/**"
     ],
     "packages": [
       "packages/*"

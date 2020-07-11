@@ -16,6 +16,8 @@ import AddressesHome from './screens/AddressesHome';
 import AddAddress from './screens/AddAddress';
 import CartConfirm from './screens/CartConfirm';
 import OrderDetails from './screens/OrderDetails';
+import AboutHome from './screens/AboutHome';
+import Doc from './screens/Doc';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -23,6 +25,7 @@ const Shop = createStackNavigator();
 const Cart = createStackNavigator();
 const Addresses = createStackNavigator();
 const Order = createStackNavigator();
+const About = createStackNavigator();
 
 function BottomTabRoutes() {
   return (
@@ -140,6 +143,25 @@ function OrderRoutes({route}) {
   );
 }
 
+function AboutRoutes() {
+  return (
+    <About.Navigator
+      screenOptions={{
+        headerTitleStyle: {
+          fontFamily: 'FredokaOne-Regular',
+        },
+        headerTintColor: '#5c2f0c',
+      }}>
+      <About.Screen
+        name="AboutHome"
+        component={AboutHome}
+        options={{title: 'Sobre o app'}}
+      />
+      <About.Screen name="Doc" component={Doc} />
+    </About.Navigator>
+  );
+}
+
 export default function Routes() {
   return (
     <NavigationContainer>
@@ -159,6 +181,7 @@ export default function Routes() {
         <Stack.Screen name="CartHome" component={CartRoutes} />
         <Stack.Screen name="Addresses" component={AddressesRoutes} />
         <Stack.Screen name="OrderDetails" component={OrderRoutes} />
+        <Stack.Screen name="About" component={AboutRoutes} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -32,6 +32,9 @@ export default function Profile({navigation}) {
         <CustomButton onPress={() => navigation.navigate('Addresses')}>
           Meus endereços
         </CustomButton>
+        <CustomButton onPress={() => navigation.navigate('About')}>
+          Sobre o app
+        </CustomButton>
         <CustomButton onPress={actions.logout}>Sair</CustomButton>
       </View>
     </ScrollView>
