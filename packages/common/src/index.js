@@ -3,8 +3,8 @@ const project = {
   author: {
     name: "Henrique Couto",
     email: "henrique.coutu@live.com",
-    url: "henriquecouto.com.br"
-  }
+    url: "henriquecouto.com.br",
+  },
 };
 
 module.exports = { project };

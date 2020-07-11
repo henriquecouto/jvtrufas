@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {Text, View} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {baseURL} from '../../../api';
 

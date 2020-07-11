@@ -1,12 +1,20 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Linking} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import CustomButton from '../../components/CustomButton';
+import LargeButton from '../../components/LargeButton';
+const {project} = require('jvtrufas-common');
 
 export default function AboutHome({navigation}) {
   return (
     <ScrollView>
       <View style={styles.root}>
+        <LargeButton
+          header="Desenvolvimento"
+          title={`O aplicativo ${project.name} é mantido com ❤ por ${project.author.name}.`}
+          subtitle="Ver site"
+          onPress={() => Linking.openURL(`https://${project.author.url}`)}
+        />
         <CustomButton
           onPress={() => navigation.navigate('Doc', {name: 'privacyPolicy'})}>
           Políticas de Privacidade
