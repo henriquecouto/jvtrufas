@@ -3,6 +3,16 @@ const authConfig = require("../config/auth");
 const bcrypt = require("bcryptjs");
 const { User } = require("../models/UserModel");
 
+const expirationToken = 30; //days
+
+exports.getNewToken = async (req, res) => {
+  const user = await User.findById(req.userId);
+  const token = jwt.sign({ id: user.id }, authConfig[user.type], {
+    expiresIn: 86400 * expirationToken,
+  });
+  return res.send({ user, token });
+};
+
 exports.createUser = async (req, res) => {
   const { email, name, password, type } = req.body;
   try {
@@ -32,7 +42,7 @@ exports.createUser = async (req, res) => {
     user.password = undefined;
 
     const token = jwt.sign({ id: user.id }, authConfig[user.type], {
-      expiresIn: 86400 * 30,
+      expiresIn: 86400 * expirationToken,
     });
 
     return res.send({ user, token });
@@ -58,7 +68,7 @@ exports.login = async (req, res) => {
     user.password = undefined;
 
     const token = jwt.sign({ id: user.id }, authConfig[user.type], {
-      expiresIn: 86400 * 30,
+      expiresIn: 86400 * expirationToken,
     });
 
     return res.send({ user, token });
