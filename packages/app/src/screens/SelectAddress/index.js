@@ -5,9 +5,24 @@ import AddressItem from '../../components/AddressItem';
 import {GlobalContext} from '../../contexts/global';
 import CustomButton from '../../components/CustomButton';
 import Icon from 'react-native-vector-icons/Feather';
+import LargeButton from '../../components/LargeButton';
 
 export default function SelectAddress({navigation}) {
   const [{auth, cart}, actions] = useContext(GlobalContext);
+
+  if (!auth.user.addresses.length) {
+    return (
+      <View style={styles.root}>
+        <LargeButton
+          onPress={() => navigation.push('Addresses')}
+          header="Ops..."
+          title="Você não tem nenhum endereço cadastrado 😕"
+          subtitle="Cadastre agora!"
+        />
+      </View>
+    );
+  }
+
   return (
     <>
       <FlatList
