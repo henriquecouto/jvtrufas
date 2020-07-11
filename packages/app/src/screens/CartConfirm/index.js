@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect, useCallback} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -6,12 +6,10 @@ import CheckBox from '@react-native-community/checkbox';
 import {GlobalContext} from '../../contexts/global';
 import {
   ScrollView,
-  TouchableHighlight,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 import AddressItem from '../../components/AddressItem';
 import CustomButton from '../../components/CustomButton';
-import Icon from 'react-native-vector-icons/Feather';
 import ProductCart from '../../components/ProductCart';
 import parsePrice from '../../helpers/parsePrice';
 import api from '../../../api';
@@ -25,9 +23,17 @@ minimumDate.setDate(minimumDate.getDate() + 10);
 export default function CartConfirm({navigation}) {
   const [{cart, auth}, actions] = useContext(GlobalContext);
   const [total, setTotal] = useState(0);
-  const [type, setType] = useState('instant');
+  const [type, setType] = useState('');
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [activeInstant, setActiveInstant] = useState(false);
+
+  const loadActiveInstant = useCallback(async () => {
+    const {data} = await api.get('/purchaser/order/get-instant', {
+      headers: {Authorization: `Bearer ${auth.token}`},
+    });
+    setActiveInstant(data.active);
+  }, [auth.token]);
 
   useEffect(() => {
     let result = 0;
@@ -36,6 +42,10 @@ export default function CartConfirm({navigation}) {
     }
     setTotal(result);
   }, [cart.items]);
+
+  useEffect(() => {
+    loadActiveInstant();
+  }, [loadActiveInstant]);
 
   const handleType = (value) => {
     if (value === 'instant') {
@@ -72,15 +82,17 @@ export default function CartConfirm({navigation}) {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Entrega</Text>
           <View style={styles.checkbox}>
-            <TouchableWithoutFeedback
-              style={styles.checkbox}
-              onPress={() => handleType('instant')}>
-              <CheckBox
-                tintColors={{true: '#ff6600'}}
-                value={type === 'instant'}
-              />
-              <Text>Hoje</Text>
-            </TouchableWithoutFeedback>
+            {activeInstant && (
+              <TouchableWithoutFeedback
+                style={styles.checkbox}
+                onPress={() => handleType('instant')}>
+                <CheckBox
+                  tintColors={{true: '#ff6600'}}
+                  value={type === 'instant'}
+                />
+                <Text>Hoje</Text>
+              </TouchableWithoutFeedback>
+            )}
             <TouchableWithoutFeedback
               style={styles.checkbox}
               onPress={() => handleType('scheduled')}>
@@ -133,14 +145,16 @@ export default function CartConfirm({navigation}) {
             return <ProductCart product={item} key={item._id + index} />;
           })}
       </ScrollView>
-      <View style={styles.footer}>
-        <CustomButton type="custom" onPress={makeOrder}>
-          <View style={styles.buttonNext}>
-            <Text style={styles.buttonText}>Pedir agora!</Text>
-            <Text style={styles.buttonText}>{parsePrice(total)}</Text>
-          </View>
-        </CustomButton>
-      </View>
+      {!!type && (
+        <View style={styles.footer}>
+          <CustomButton type="custom" onPress={makeOrder}>
+            <View style={styles.buttonNext}>
+              <Text style={styles.buttonText}>Pedir agora!</Text>
+              <Text style={styles.buttonText}>{parsePrice(total)}</Text>
+            </View>
+          </CustomButton>
+        </View>
+      )}
     </>
   );
 }
