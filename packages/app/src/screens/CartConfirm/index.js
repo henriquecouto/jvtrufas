@@ -1,6 +1,6 @@
 import React, {useContext, useState, useEffect, useCallback} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Picker} from '@react-native-community/picker';
+import {View, Text, StyleSheet, Button} from 'react-native';
+import Modal from 'react-native-modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CheckBox from '@react-native-community/checkbox';
 import {GlobalContext} from '../../contexts/global';
@@ -27,6 +27,7 @@ export default function CartConfirm({navigation}) {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [activeInstant, setActiveInstant] = useState(false);
+  const [confirmModal, setConfirmModal] = useState(false);
 
   const loadActiveInstant = useCallback(async () => {
     const {data} = await api.get('/purchaser/order/get-instant', {
@@ -70,14 +71,38 @@ export default function CartConfirm({navigation}) {
 
       actions.clearCart();
       actions.addOrder(data.order);
-      navigation.navigate('Home');
+
+      if (data.order.type === 'scheduled') {
+        setConfirmModal(true);
+      } else {
+        navigation.navigate('Home');
+      }
     } catch (error) {
       console.log('error create order: ', error.response.data);
     }
   };
 
+  const closeModal = () => {
+    setConfirmModal(false);
+    navigation.navigate('Home');
+  };
+
   return (
     <>
+      <Modal isVisible={confirmModal} onBackButtonPress={closeModal}>
+        <View style={styles.modal}>
+          <Text style={styles.title}>Fazer pedido</Text>
+          <View style={styles.divider} />
+          <Text style={styles.contentModal}>
+            Caso deseje, você poderá cancelar o seu pedido em até 2 dias antes
+            da data de entrega
+          </Text>
+          <View style={styles.divider} />
+          <View style={styles.footerModal}>
+            <Button color="#ff6600" onPress={closeModal} title="Ok" />
+          </View>
+        </View>
+      </Modal>
       <ScrollView contentContainerStyle={styles.root}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Entrega</Text>
@@ -162,6 +187,21 @@ export default function CartConfirm({navigation}) {
 const styles = StyleSheet.create({
   root: {
     padding: 20,
+  },
+  modal: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 20,
+  },
+  contentModal: {
+    fontFamily: 'FredokaOne-Regular',
+    fontSize: 20,
+    color: '#ff6600',
+  },
+  footerModal: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '100%',
   },
   divider: {
     width: '100%',
