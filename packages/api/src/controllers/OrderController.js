@@ -1,5 +1,10 @@
+const fs = require("fs");
+const path = require("path");
+
 const { Order } = require("../models/OrderModel");
 const { Item } = require("../models/ItemModel");
+
+const filePath = path.join(__dirname, "..", "/config/instant-orders.json");
 
 exports.createOrder = async (req, res) => {
   req.body.payment = undefined;
@@ -134,5 +139,38 @@ exports.getUserOrders = async (req, res) => {
     return res.send({ orders });
   } catch (error) {
     return res.status(400).send({ error });
+  }
+};
+
+exports.toggleInstant = async (req, res) => {
+  try {
+    const config = JSON.parse(await fs.readFileSync(filePath).toString());
+
+    await fs.writeFileSync(
+      filePath,
+      JSON.stringify({
+        active: !config.active,
+      })
+    );
+
+    return res.send({ active: !config.active });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(400)
+      .send({ error, message: "error when toggle instant orders" });
+  }
+};
+
+exports.getInstant = async (req, res) => {
+  try {
+    const config = JSON.parse(await fs.readFileSync(filePath).toString());
+
+    return res.send(config);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(400)
+      .send({ error, message: "error on get instant orders status" });
   }
 };

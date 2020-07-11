@@ -4,6 +4,7 @@ const orderMiddleware = require("../../middlewares/orderMiddleware");
 
 router.route("/").post(controller.createOrder);
 router.route("/").get(controller.getUserOrders);
+router.route("/get-instant").get(controller.getInstant);
 
 router.use("/:orderId", orderMiddleware);
 router
