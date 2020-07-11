@@ -62,6 +62,13 @@ export const GlobalContextProvider = ({children}) => {
     setCart(newCart);
   };
 
+  const updateOrder = async (order) => {
+    const newOrders = globalState.orders;
+    const orderIndex = newOrders.findIndex((v) => v._id === order._id);
+    newOrders[orderIndex] = order;
+    setGlobalState((old) => ({...old, orders: newOrders}));
+  };
+
   const setOrders = async (orders) => {
     try {
       await Storage.setItem('orders', orders);
@@ -85,6 +92,7 @@ export const GlobalContextProvider = ({children}) => {
     updateAddresses,
     setCartAddress,
     addOrder,
+    updateOrder,
   };
 
   const loadAuth = async () => {

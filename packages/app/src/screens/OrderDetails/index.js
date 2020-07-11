@@ -1,9 +1,13 @@
-import React, {useEffect, useCallback, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useEffect, useCallback, useState, useContext} from 'react';
+import {View, Text, StyleSheet, Button} from 'react-native';
+import Modal from 'react-native-modal';
 import AddressItem from '../../components/AddressItem';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableHighlight} from 'react-native-gesture-handler';
 import ProductCart from '../../components/ProductCart';
 import parsePrice from '../../helpers/parsePrice';
+import CustomButton from '../../components/CustomButton';
+import api from '../../../api';
+import {GlobalContext} from '../../contexts/global';
 
 const statuses = {
   waiting: 'Aguardando preparo',
@@ -12,23 +16,46 @@ const statuses = {
   canceled: 'Pedido cancelado',
 };
 
+const priceToCancelable = 50,
+  daysToCancelable = 86400000 * 2;
+
 export default function OrderDetails({navigation, route}) {
+  const [{auth}, actions] = useContext(GlobalContext);
+  const [order, setOrder] = useState(route.params.order);
   const [total, setTotal] = useState(0);
+  const [cancelable, setCancelable] = useState(false);
+  const [confirmCancel, setConfirmCancel] = useState(false);
 
   const loadTotal = useCallback(() => {
     let result = 0;
-    for (let i in route.params.order.items) {
-      result +=
-        route.params.order.items[i].price * route.params.order.items[i].amount;
+    for (let i in order.items) {
+      result += order.items[i].price * order.items[i].amount;
     }
     setTotal(result);
-  }, [route.params]);
+  }, [order.items]);
 
   const loadTitle = useCallback(() => {
     navigation.setOptions({
-      title: 'Pedido Nº ' + route.params.order.orderNumber,
+      title: 'Pedido Nº ' + order.orderNumber,
     });
-  }, [route.params, navigation]);
+  }, [order.orderNumber, navigation]);
+
+  const toggleConfirmCancel = () => {
+    setConfirmCancel((old) => !old);
+  };
+
+  const cancel = async () => {
+    toggleConfirmCancel();
+    try {
+      const {data} = await api.delete(`/purchaser/order/${order._id}`, {
+        headers: {Authorization: `Bearer ${auth.token}`},
+      });
+      actions.updateOrder(data.order);
+      setOrder(data.order);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     loadTitle();
@@ -38,15 +65,56 @@ export default function OrderDetails({navigation, route}) {
     loadTotal();
   }, [loadTotal]);
 
+  useEffect(() => {
+    if (total) {
+      const deliveryDate = new Date(order.deliveryDate).getTime();
+      const now = Date.now();
+
+      if (order.status !== 'canceled') {
+        if (
+          order.type === 'scheduled' &&
+          total >= priceToCancelable &&
+          deliveryDate - now <= daysToCancelable
+        ) {
+          setCancelable(false);
+        } else if (order.type === 'instant' && order.status !== 'waiting') {
+          setCancelable(false);
+        } else {
+          setCancelable(true);
+        }
+      }
+    }
+  }, [total, order]);
+
   return (
     <>
+      <Modal isVisible={confirmCancel} onBackButtonPress={toggleConfirmCancel}>
+        <View style={styles.modal}>
+          <Text style={styles.title}>Cancelar</Text>
+          <View style={styles.divider} />
+          <Text style={styles.contentModal}>
+            Deseja confirmar o cancelamento do pedido Nº {order.orderNumber}?
+          </Text>
+          <View style={styles.divider} />
+          <View style={styles.footerModal}>
+            <View style={styles.buttonModalLeft}>
+              <Button color="#5c2f0c" onPress={cancel} title="Sim" />
+            </View>
+            <View style={styles.buttonModalRight}>
+              <Button
+                color="#ff6600"
+                onPress={toggleConfirmCancel}
+                title="Não"
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
       <ScrollView contentContainerStyle={styles.root}>
         <View style={styles.titleContainer}>
           <View style={styles.statusContainer}>
-            <Text style={styles.title}>
-              {statuses[route.params.order.status]}
-            </Text>
-            <View style={stylesStatus[route.params.order.status]} />
+            <Text style={styles.title}>{statuses[order.status]}</Text>
+            <View style={stylesStatus[order.status]} />
           </View>
           <View style={styles.divider} />
           <Text style={styles.title}>Detalhes</Text>
@@ -55,7 +123,7 @@ export default function OrderDetails({navigation, route}) {
               Entrega:{' '}
               <Text style={styles.infoValue}>
                 {new Intl.DateTimeFormat('pt-BR').format(
-                  new Date(route.params.order.deliveryDate),
+                  new Date(order.deliveryDate),
                 )}
               </Text>
             </Text>
@@ -63,7 +131,7 @@ export default function OrderDetails({navigation, route}) {
               Realizado:{' '}
               <Text style={styles.infoValue}>
                 {new Intl.DateTimeFormat('pt-BR').format(
-                  new Date(route.params.order.registrationDate),
+                  new Date(order.registrationDate),
                 )}
               </Text>
             </Text>
@@ -72,29 +140,23 @@ export default function OrderDetails({navigation, route}) {
             </Text>
           </View>
         </View>
-        {/* {type === 'scheduled' && (
-          <Text style={styles.date}>
-            {new Intl.DateTimeFormat('pt-BR').format(date)}
-          </Text>
-        )} */}
 
         <View style={styles.divider} />
         <Text style={styles.title}>Endereço</Text>
-        <AddressItem {...route.params.order.address} />
+        <AddressItem {...order.address} />
         <View style={styles.divider} />
         <Text style={styles.title}>Pedido</Text>
-        {route.params.order.items.map((item, index) => {
+        {order.items.map((item, index) => {
           return <ProductCart product={item} key={item._id + index} />;
         })}
       </ScrollView>
-      {/* <View style={styles.footer}>
-        <CustomButton type="custom" onPress={makeOrder}>
-          <View style={styles.buttonNext}>
-            <Text style={styles.buttonText}>Pedir agora!</Text>
-            <Text style={styles.buttonText}>{parsePrice(total)}</Text>
-          </View>
-        </CustomButton>
-      </View> */}
+      {cancelable && (
+        <View style={styles.footer}>
+          <CustomButton onPress={toggleConfirmCancel}>
+            Cancelar pedido
+          </CustomButton>
+        </View>
+      )}
     </>
   );
 }
@@ -130,6 +192,23 @@ const styles = StyleSheet.create({
   root: {
     padding: 20,
   },
+  modal: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 20,
+  },
+  contentModal: {
+    fontFamily: 'FredokaOne-Regular',
+    fontSize: 20,
+    color: '#ff6600',
+  },
+  footerModal: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '100%',
+  },
+  buttonModalLeft: {flex: 1, marginRight: 10},
+  buttonModalRight: {flex: 1, marginLeft: 10},
   divider: {
     width: '100%',
     height: 4,
