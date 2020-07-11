@@ -8,7 +8,7 @@ export default function ProfileItem({value, icon, name}) {
       <View style={styles.icon}>
         <Icon name={icon} size={30} color="#fff" />
       </View>
-      <View>
+      <View style={{flex: 1}}>
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.value}>{value}</Text>
       </View>
