@@ -15,7 +15,8 @@ import isValidEmail from '../../helpers/isValidEmail';
 import {GlobalContext} from '../../contexts/global';
 import CustomButton from '../../components/CustomButton';
 import Error from '../../components/Error';
-import {ScrollView} from 'react-native-gesture-handler';
+import {ScrollView, TouchableHighlight} from 'react-native-gesture-handler';
+import {StackActions, CommonActions} from '@react-navigation/native';
 
 const errorList = {
   'invalid user type': 'Tipo de usuário inválido',
@@ -121,6 +122,25 @@ export default function SignUp({navigation}) {
                 onChangeText={setPassword}
               />
               <CustomButton onPress={register}>Cadastrar</CustomButton>
+              <Text style={styles.terms}>
+                Ao se cadastrar você concorda com nossos{' '}
+                <Text
+                  onPress={() => {
+                    navigation.navigate('Doc', {name: 'useTerms'});
+                  }}
+                  style={styles.link}>
+                  Termos de Uso
+                </Text>{' '}
+                e{' '}
+                <Text
+                  onPress={() => {
+                    navigation.navigate('Doc', {name: 'privacyPolicy'});
+                  }}
+                  style={styles.link}>
+                  Políticas de Privacidade
+                </Text>
+                .
+              </Text>
             </View>
           </View>
           <View style={styles.footer}>
@@ -148,6 +168,8 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     justifyContent: 'center',
   },
+  link: {color: '#ff6600'},
+  terms: {color: '#5c2f0c'},
   header: {
     alignItems: 'center',
     flexDirection: 'row',

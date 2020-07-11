@@ -182,6 +182,7 @@ export default function Routes() {
         <Stack.Screen name="Addresses" component={AddressesRoutes} />
         <Stack.Screen name="OrderDetails" component={OrderRoutes} />
         <Stack.Screen name="About" component={AboutRoutes} />
+        <Stack.Screen name="Doc" component={Doc} />
       </Stack.Navigator>
     </NavigationContainer>
   );
