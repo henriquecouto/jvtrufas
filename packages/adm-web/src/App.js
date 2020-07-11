@@ -1,25 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { createMuiTheme } from "@material-ui/core/styles";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  ThemeProvider,
+} from "@material-ui/core";
+import { Menu as MenuIcon } from "@material-ui/icons";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#5c2f0c",
+      contrastText: "#fff",
+    },
+    secondary: {
+      main: "#ff6600",
+      contrastText: "#212121",
+    },
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6">
+            Painel Administrativo | JV Trufas
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </ThemeProvider>
   );
 }
 
