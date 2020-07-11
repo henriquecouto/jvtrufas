@@ -6,7 +6,7 @@
 
 # Uploads
 **/uploads/
-**/public/
+packages/api/public/
 
 **/release/
 

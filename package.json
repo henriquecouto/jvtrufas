@@ -10,12 +10,17 @@
   "scripts": {
     "run-api": "yarn workspace jvtrufas-api start",
     "run-app": "yarn workspace jvtrufas-app start",
-    "run-android": "yarn workspace jvtrufas-app android"
+    "run-android": "yarn workspace jvtrufas-app android",
+    "run-adm-web": "yarn workspace jvtrufas-adm-web start"
   },
   "license": "MIT",
   "private": true,
   "workspaces": {
     "nohoist": [
+      "**/jest",
+      "**/jest/**",
+      "**/babel-jest",
+      "**/babel-jest/**",
       "**/react-native",
       "**/react-native/**",
       "**/react-native-gesture-handler",
