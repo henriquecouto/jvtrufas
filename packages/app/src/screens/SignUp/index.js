@@ -78,7 +78,7 @@ export default function SignUp({navigation}) {
             />
             <TextInput
               style={styles.input}
-              placeholder="Whatsapp (opcional)"
+              placeholder="Whatsapp"
               autoCompleteType="cc-number"
               textContentType="telephoneNumber"
               keyboardType="numeric"
@@ -91,6 +91,7 @@ export default function SignUp({navigation}) {
               style={styles.input}
               placeholder="Email"
               autoCompleteType="email"
+              autoCapitalize="none"
               value={email}
               onChangeText={setEmail}
             />

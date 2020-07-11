@@ -58,6 +58,7 @@ export default function SignIn({navigation}) {
               style={styles.input}
               placeholder="Email"
               autoCompleteType="email"
+              autoCapitalize="none"
               value={email}
               onChangeText={setEmail}
             />
