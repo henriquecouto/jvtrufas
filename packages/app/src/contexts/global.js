@@ -1,7 +1,6 @@
 import React, {createContext, useState, useEffect, useCallback} from 'react';
 import Storage from '../helpers/Storage';
 import api from '../../api';
-import {or} from 'react-native-reanimated';
 
 export const GlobalContext = createContext();
 
@@ -96,7 +95,7 @@ export const GlobalContextProvider = ({children}) => {
     updateOrder,
   };
 
-  const loadAuth = async () => {
+  const loadAuth = useCallback(async () => {
     try {
       const auth = await Storage.getItem('auth');
 
@@ -106,7 +105,6 @@ export const GlobalContextProvider = ({children}) => {
       if (now - lastLogin >= 86400000 * 25) {
         logout();
       } else if (now - lastLogin >= 86400000 * 2) {
-        console.log({lastLogin, now, a: now - lastLogin});
         const {data} = await api.get('/auth/request-token', {
           headers: {Authorization: `Bearer ${auth.token}`},
         });
@@ -119,7 +117,7 @@ export const GlobalContextProvider = ({children}) => {
       console.log('global state load auth error: ', error);
       console.log(error.response.data);
     }
-  };
+  }, []);
 
   const loadCart = async () => {
     try {
@@ -146,9 +144,12 @@ export const GlobalContextProvider = ({children}) => {
   }, [globalState.auth]);
 
   useEffect(() => {
-    loadAuth();
     loadCart();
   }, []);
+
+  useEffect(() => {
+    loadAuth();
+  }, [loadAuth]);
 
   useEffect(() => {
     loadOrders();
