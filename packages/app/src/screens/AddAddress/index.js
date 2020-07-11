@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import {TextInput, ScrollView} from 'react-native-gesture-handler';
 import CustomButton from '../../components/CustomButton';
 import api from '../../../api';
@@ -9,6 +9,7 @@ export default function AddAddress({navigation}) {
   const [{auth}, actions] = useContext(GlobalContext);
 
   const [street, setStreet] = useState('');
+  const [number, setNumber] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
   const [landmark, setLandmark] = useState('');
 
@@ -17,7 +18,7 @@ export default function AddAddress({navigation}) {
       const {data} = await api.post(
         '/purchaser/address',
         {
-          street,
+          street: `${street}, ${number}`,
           neighborhood,
           landmark,
         },
@@ -34,10 +35,17 @@ export default function AddAddress({navigation}) {
   return (
     <ScrollView contentContainerStyle={styles.root}>
       <TextInput
-        placeholder="Nome da rua, número"
+        placeholder="Nome da rua"
         value={street}
         onChangeText={setStreet}
         style={styles.input}
+      />
+      <TextInput
+        placeholder="Número"
+        value={number}
+        onChangeText={setNumber}
+        style={styles.input}
+        keyboardType="visible-password"
       />
       <TextInput
         placeholder="Nome do bairro"
@@ -51,6 +59,7 @@ export default function AddAddress({navigation}) {
         onChangeText={setLandmark}
         style={styles.input}
       />
+      <Text style={styles.input}>Lajedo-PE</Text>
       <CustomButton onPress={add}>Adicionar</CustomButton>
     </ScrollView>
   );
