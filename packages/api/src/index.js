@@ -4,6 +4,7 @@ const autoIncrement = require("mongoose-auto-increment");
 const bodyParser = require("body-parser");
 const { project } = require("jvtrufas-common");
 const path = require("path");
+const cors = require("cors");
 
 // MONGOOSE CONFIG
 mongoose.connect("mongodb://localhost:27017/jvtrufas", {
@@ -27,6 +28,8 @@ const port = 3030;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(cors());
 
 app.use("/auth", require("./routes/UserRouter"));
 app.use("/admin", require("./routes/AdminRouter"));

@@ -1,41 +1,35 @@
-import React from "react";
-import { createMuiTheme } from "@material-ui/core/styles";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  ThemeProvider,
-} from "@material-ui/core";
-import { Menu as MenuIcon } from "@material-ui/icons";
+import React, { useContext } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: "#5c2f0c",
-      contrastText: "#fff",
-    },
-    secondary: {
-      main: "#ff6600",
-      contrastText: "#212121",
-    },
-  },
-});
+import { GlobalContext } from "./contexts/global";
+import SignIn from "./screens/SignIn";
+import Header from "./components/Header";
 
 function App() {
+  const [{ auth }] = useContext(GlobalContext);
+
+  if (!auth.token) {
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <SignIn />
+          </Route>
+        </Switch>
+      </Router>
+    );
+  }
+
   return (
-    <ThemeProvider theme={theme}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6">
-            Painel Administrativo | JV Trufas
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </ThemeProvider>
+    <Router>
+      <Header>
+        <Switch>
+          <Route exact path="/">
+            Hello Home Screen
+          </Route>
+        </Switch>
+      </Header>
+    </Router>
   );
 }
 
