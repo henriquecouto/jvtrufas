@@ -8,7 +8,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import {project} from 'jvtrufas-common';
+import {files} from 'jvtrufas-common/src/files';
 
 import api from '../../../api';
 import isValidEmail from '../../helpers/isValidEmail';
@@ -79,7 +79,7 @@ export default function SignUp({navigation}) {
         style={styles.image}>
         <View style={styles.root}>
           <View style={styles.header}>
-            <Image source={project.logo} style={{width: 150, height: 150}} />
+            <Image source={files.logo} style={{width: 150, height: 150}} />
             <Text style={styles.title}>Trufas</Text>
           </View>
           <View style={styles.body}>

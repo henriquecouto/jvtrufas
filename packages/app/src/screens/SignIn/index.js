@@ -15,7 +15,7 @@ import {GlobalContext} from '../../contexts/global';
 import CustomButton from '../../components/CustomButton';
 import Error from '../../components/Error';
 
-import {project} from 'jvtrufas-common';
+import {files} from 'jvtrufas-common/src/files';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const errorList = {
@@ -59,7 +59,7 @@ export default function SignIn({navigation}) {
         style={styles.image}>
         <View style={styles.root}>
           <View style={styles.header}>
-            <Image source={project.logo} style={{width: 150, height: 150}} />
+            <Image source={files.logo} style={{width: 150, height: 150}} />
             <Text style={styles.title}>Trufas</Text>
           </View>
           <View style={styles.body}>

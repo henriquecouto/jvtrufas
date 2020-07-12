@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { project } from "jvtrufas-common";
+import { files } from "jvtrufas-common/src/files";
 import {
   Container,
   CssBaseline,
@@ -78,7 +78,7 @@ export default function SignIn() {
       <CssBaseline />
       <div className={classes.paper}>
         <div className={classes.logo}>
-          <img src={project.logo} alt="" className={classes.logoImg} />
+          <img src={files.logo} alt="" className={classes.logoImg} />
         </div>
         <Typography component="h1" variant="h5">
           Painel Administrativo
