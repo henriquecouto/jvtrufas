@@ -2,8 +2,9 @@ import React, { useContext } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { GlobalContext } from "./contexts/global";
-import SignIn from "./screens/SignIn";
 import Header from "./components/Header";
+import SignIn from "./screens/SignIn";
+import Home from "./screens/Home";
 
 function App() {
   const [{ auth }] = useContext(GlobalContext);
@@ -25,7 +26,7 @@ function App() {
       <Header>
         <Switch>
           <Route exact path="/">
-            Hello Home Screen
+            <Home />
           </Route>
         </Switch>
       </Header>
