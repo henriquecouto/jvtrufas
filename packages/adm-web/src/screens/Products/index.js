@@ -73,8 +73,8 @@ export default function Products() {
       <Hidden xsDown>
         {products.map((product) => {
           return (
-            <Grid item xs={4}>
-              <Product product={product} key={product._id} />
+            <Grid item xs={4} key={product._id}>
+              <Product product={product} />
             </Grid>
           );
         })}
@@ -82,8 +82,8 @@ export default function Products() {
       <Hidden smUp>
         {products.map((product) => {
           return (
-            <Grid item xs={12}>
-              <Product product={product} key={product._id} />
+            <Grid item xs={12} key={product._id}>
+              <Product product={product} />
             </Grid>
           );
         })}
