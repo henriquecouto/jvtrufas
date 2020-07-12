@@ -7,6 +7,7 @@ export const GlobalContext = createContext();
 export const GlobalContextProvider = ({ children }) => {
   const [globalState, setGlobalState] = useState({
     auth: {},
+    products: [],
   });
 
   const login = async (data) => {
@@ -54,9 +55,26 @@ export const GlobalContextProvider = ({ children }) => {
     }
   }, []);
 
+  const loadProducts = useCallback(async () => {
+    if (globalState.auth.token) {
+      try {
+        const { data } = await api.get("/admin/product", {
+          headers: { Authorization: `Bearer ${globalState.auth.token}` },
+        });
+        setGlobalState((old) => ({ ...old, products: data.items }));
+      } catch (error) {
+        console.log("load products error: ", error);
+      }
+    }
+  }, [globalState.auth]);
+
   useEffect(() => {
     loadAuth();
   }, [loadAuth]);
+
+  useEffect(() => {
+    loadProducts();
+  }, [loadProducts]);
 
   return (
     <GlobalContext.Provider value={[globalState, actions]}>
