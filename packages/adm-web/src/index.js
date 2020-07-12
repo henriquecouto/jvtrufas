@@ -12,18 +12,16 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: "#ff6600",
-      contrastText: "#212121",
+      contrastText: "#fff",
     },
   },
 });
 
 ReactDOM.render(
-  <React.StrictMode>
-    <GlobalContextProvider>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </GlobalContextProvider>
-  </React.StrictMode>,
+  <GlobalContextProvider>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </GlobalContextProvider>,
   document.getElementById("root")
 );

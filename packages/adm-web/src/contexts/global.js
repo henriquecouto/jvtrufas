@@ -42,7 +42,13 @@ export const GlobalContextProvider = ({ children }) => {
     }
   };
 
-  const actions = { login, logout, toggleInstant };
+  const addProduct = async (product) => {
+    const newProducts = globalState.products;
+    newProducts.push(product);
+    setGlobalState((old) => ({ ...old, products: newProducts }));
+  };
+
+  const actions = { login, logout, toggleInstant, addProduct };
 
   const loadAuth = useCallback(async () => {
     try {
