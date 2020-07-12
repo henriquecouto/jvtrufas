@@ -14,6 +14,7 @@ import {
   SwipeableDrawer,
   ListItemIcon,
   Button,
+  Switch,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -24,7 +25,7 @@ import {
 import { Link } from "react-router-dom";
 import { GlobalContext } from "../../contexts/global";
 
-const drawerWidth = 240;
+const drawerWidth = 280;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header({ children }) {
-  const [, actions] = useContext(GlobalContext);
+  const [{ activeInstant }, actions] = useContext(GlobalContext);
   const location = window.location.pathname.split("/")[1];
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
@@ -61,32 +62,51 @@ export default function Header({ children }) {
   };
 
   const MenuList = () => (
-    <List>
-      <ListItem
-        button
-        component={Link}
-        to={"/"}
-        onClick={toggleDrawer}
-        selected={`/${location}` === "/"}
-      >
-        <ListItemIcon>
-          <HomeIcon />
-        </ListItemIcon>
-        <ListItemText primary="Início" />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to={"/produtos"}
-        onClick={toggleDrawer}
-        selected={`/${location}` === "/produtos"}
-      >
-        <ListItemIcon>
-          <StoreIcon />
-        </ListItemIcon>
-        <ListItemText primary="Produtos" />
-      </ListItem>
-    </List>
+    <Grid
+      container
+      direction="column"
+      justify="space-between"
+      style={{ height: "100%" }}
+    >
+      <Grid item>
+        <List>
+          <ListItem
+            button
+            component={Link}
+            to={"/"}
+            onClick={toggleDrawer}
+            selected={`/${location}` === "/"}
+          >
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Início" />
+          </ListItem>
+          <ListItem
+            button
+            component={Link}
+            to={"/produtos"}
+            onClick={toggleDrawer}
+            selected={`/${location}` === "/produtos"}
+          >
+            <ListItemIcon>
+              <StoreIcon />
+            </ListItemIcon>
+            <ListItemText primary="Produtos" />
+          </ListItem>
+        </List>
+      </Grid>
+      <Grid item>
+        <List>
+          <ListItem button component="button" onClick={actions.toggleInstant}>
+            <Grid container alignItems="center" justify="space-between">
+              <ListItemText primary="Pedidos Instantâneos" />
+              <Switch checked={activeInstant} />
+            </Grid>
+          </ListItem>
+        </List>
+      </Grid>
+    </Grid>
   );
 
   return (

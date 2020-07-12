@@ -8,6 +8,7 @@ export const GlobalContextProvider = ({ children }) => {
   const [globalState, setGlobalState] = useState({
     auth: {},
     products: [],
+    activeInstant: false,
   });
 
   const login = async (data) => {
@@ -29,7 +30,19 @@ export const GlobalContextProvider = ({ children }) => {
     }
   };
 
-  const actions = { login, logout };
+  const toggleInstant = async () => {
+    try {
+      const { data } = await api.get("/admin/order/toggle-instant", {
+        headers: { Authorization: `Bearer ${globalState.auth.token}` },
+      });
+
+      setGlobalState((old) => ({ ...old, activeInstant: data.active }));
+    } catch (error) {
+      console.log("error on toggle instant: ", error);
+    }
+  };
+
+  const actions = { login, logout, toggleInstant };
 
   const loadAuth = useCallback(async () => {
     try {
@@ -68,6 +81,19 @@ export const GlobalContextProvider = ({ children }) => {
     }
   }, [globalState.auth]);
 
+  const loadActiveInstant = useCallback(async () => {
+    if (globalState.auth.token) {
+      try {
+        const { data } = await api.get("/admin/order/get-instant", {
+          headers: { Authorization: `Bearer ${globalState.auth.token}` },
+        });
+        setGlobalState((old) => ({ ...old, activeInstant: data.active }));
+      } catch (error) {
+        console.log("error load active instant orders: ", error);
+      }
+    }
+  }, [globalState.auth]);
+
   useEffect(() => {
     loadAuth();
   }, [loadAuth]);
@@ -75,6 +101,10 @@ export const GlobalContextProvider = ({ children }) => {
   useEffect(() => {
     loadProducts();
   }, [loadProducts]);
+
+  useEffect(() => {
+    loadActiveInstant();
+  }, [loadActiveInstant]);
 
   return (
     <GlobalContext.Provider value={[globalState, actions]}>
