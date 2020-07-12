@@ -41,8 +41,17 @@ exports.createOrder = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const orders = await Order.find();
-    return res.send({ orders });
+    const scheduled = await Order.find({
+      type: "scheduled",
+      status: { $nin: ["canceled", "delivered"] },
+    })
+      .sort({ deliveryDate: 1 })
+      .populate("purchaserId");
+    const instant = await Order.find({
+      type: "instant",
+      status: { $nin: ["canceled", "delivered"] },
+    }).sort({ registrationDate: 1 });
+    return res.send({ scheduled, instant });
   } catch (error) {
     return res.status(400).send({ error });
   }

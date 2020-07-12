@@ -9,6 +9,7 @@ export const GlobalContextProvider = ({ children }) => {
     auth: {},
     products: [],
     activeInstant: false,
+    orders: { scheduled: [], instant: [] },
   });
 
   const login = async (data) => {
@@ -100,6 +101,23 @@ export const GlobalContextProvider = ({ children }) => {
     }
   }, [globalState.auth]);
 
+  const runLoadOrders = async () => {
+    if (globalState.auth.token) {
+      try {
+        console.log("load orders");
+        const { data } = await api.get("/admin/order", {
+          headers: { Authorization: `Bearer ${globalState.auth.token}` },
+        });
+        setGlobalState((old) => ({ ...old, orders: data }));
+        setTimeout(runLoadOrders, 10000);
+      } catch (error) {
+        console.log("error load active instant orders: ", error);
+      }
+    }
+  };
+
+  const loadOrders = useCallback(runLoadOrders, [globalState.auth]);
+
   useEffect(() => {
     loadAuth();
   }, [loadAuth]);
@@ -111,6 +129,10 @@ export const GlobalContextProvider = ({ children }) => {
   useEffect(() => {
     loadActiveInstant();
   }, [loadActiveInstant]);
+
+  useEffect(() => {
+    loadOrders();
+  }, [loadOrders]);
 
   return (
     <GlobalContext.Provider value={[globalState, actions]}>

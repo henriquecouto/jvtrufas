@@ -126,9 +126,7 @@ export default function Header({ children }) {
                     <MenuIcon />
                   </IconButton>
                 </Hidden>
-                <Typography variant="h6">
-                  Painel Administrativo | JV Trufas
-                </Typography>
+                <Typography variant="h6">Painel | JV Trufas</Typography>
               </Grid>
             </Grid>
             <Grid item>

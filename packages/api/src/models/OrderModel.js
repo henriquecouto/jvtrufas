@@ -4,7 +4,11 @@ const { ItemSchema } = require("./ItemModel");
 const { AddressSchema } = require("./AddressModel");
 
 const OrderSchema = new mongoose.Schema({
-  purchaserId: { type: mongoose.SchemaTypes.ObjectId, required: true },
+  purchaserId: {
+    type: mongoose.SchemaTypes.ObjectId,
+    required: true,
+    ref: "User",
+  },
   orderNumber: { type: Number, required: true },
   items: { type: [ItemSchema], required: true },
   type: { type: String, enum: ["scheduled", "instant"], required: true },
