@@ -16,9 +16,12 @@ import {
   Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Home as HomeIcon } from "@material-ui/icons";
-import { Menu as MenuIcon } from "@material-ui/icons";
-import { Link, Redirect } from "react-router-dom";
+import {
+  Home as HomeIcon,
+  Menu as MenuIcon,
+  Store as StoreIcon,
+} from "@material-ui/icons";
+import { Link } from "react-router-dom";
 import { GlobalContext } from "../../contexts/global";
 
 const drawerWidth = 240;
@@ -52,15 +55,9 @@ export default function Header({ children }) {
   const location = window.location.pathname.split("/")[1];
   const classes = useStyles();
   const [drawer, setDrawer] = useState(false);
-  const [redirect, setRedirect] = useState(false);
 
   const toggleDrawer = () => {
     setDrawer((v) => !v);
-  };
-
-  const callSignout = () => {
-    actions.logout();
-    setRedirect(true);
   };
 
   const MenuList = () => (
@@ -77,12 +74,20 @@ export default function Header({ children }) {
         </ListItemIcon>
         <ListItemText primary="Início" />
       </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to={"/produtos"}
+        onClick={toggleDrawer}
+        selected={`/${location}` === "/produtos"}
+      >
+        <ListItemIcon>
+          <StoreIcon />
+        </ListItemIcon>
+        <ListItemText primary="Produtos" />
+      </ListItem>
     </List>
   );
-
-  if (redirect) {
-    return <Redirect to="/" />;
-  }
 
   return (
     <div className={classes.root}>
@@ -107,7 +112,7 @@ export default function Header({ children }) {
               </Grid>
             </Grid>
             <Grid item>
-              <Button onClick={callSignout} color="inherit">
+              <Button onClick={actions.logout} color="inherit">
                 Sair
               </Button>
             </Grid>

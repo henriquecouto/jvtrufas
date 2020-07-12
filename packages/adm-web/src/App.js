@@ -5,6 +5,7 @@ import { GlobalContext } from "./contexts/global";
 import Header from "./components/Header";
 import SignIn from "./screens/SignIn";
 import Home from "./screens/Home";
+import Products from "./screens/Products";
 
 function App() {
   const [{ auth }] = useContext(GlobalContext);
@@ -13,7 +14,7 @@ function App() {
     return (
       <Router>
         <Switch>
-          <Route exact path="/">
+          <Route path="/">
             <SignIn />
           </Route>
         </Switch>
@@ -27,6 +28,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route exact path="/produtos">
+            <Products />
           </Route>
         </Switch>
       </Header>
