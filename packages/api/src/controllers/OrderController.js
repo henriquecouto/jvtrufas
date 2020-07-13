@@ -50,7 +50,9 @@ exports.getAll = async (req, res) => {
     const instant = await Order.find({
       type: "instant",
       status: { $nin: ["canceled", "delivered"] },
-    }).sort({ registrationDate: 1 });
+    })
+      .sort({ registrationDate: 1 })
+      .populate("purchaserId");
     return res.send({ scheduled, instant });
   } catch (error) {
     return res.status(400).send({ error });
