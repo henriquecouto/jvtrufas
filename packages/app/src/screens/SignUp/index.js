@@ -15,12 +15,12 @@ import isValidEmail from '../../helpers/isValidEmail';
 import {GlobalContext} from '../../contexts/global';
 import CustomButton from '../../components/CustomButton';
 import Error from '../../components/Error';
-import {ScrollView, TouchableHighlight} from 'react-native-gesture-handler';
-import {StackActions, CommonActions} from '@react-navigation/native';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const errorList = {
   'invalid user type': 'Tipo de usuário inválido',
   'email is required': 'Você precisa inserir seu email',
+  'whatsapp is required': 'Você precisa inserir seu whatsapp',
   'name is required': 'Você precisa inserir seu nome',
   'password is required': 'Você precisa criar uma senha',
   'email already registered': 'Seu email já está cadastrado',
@@ -51,7 +51,7 @@ export default function SignUp({navigation}) {
       return;
     }
 
-    if (!name) {
+    if (!whatsapp) {
       setError('Insira o seu Whatsapp');
       return;
     }
