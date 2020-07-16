@@ -142,7 +142,9 @@ exports.getUserOrders = async (req, res) => {
     let orders = [];
 
     if (req.userType === "purchaser") {
-      orders = await Order.find({ purchaserId: req.userId });
+      orders = await Order.find({ purchaserId: req.userId }).sort({
+        orderNumber: -1,
+      });
     } else if (req.userType === "admin") {
       orders = await Order.find({ purchaserId: req.params.userId });
     }
