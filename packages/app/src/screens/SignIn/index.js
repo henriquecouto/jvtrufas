@@ -7,6 +7,7 @@ import {
   TextInput,
   Image,
   Dimensions,
+  LayoutAnimation,
 } from 'react-native';
 
 import api from '../../../api';
@@ -31,6 +32,7 @@ export default function SignIn({navigation}) {
   const [error, setError] = useState(null);
 
   const login = async () => {
+    LayoutAnimation.easeInEaseOut();
     if (!isValidEmail(email)) {
       setError('Você digitou um email inválido');
       return;
@@ -53,10 +55,10 @@ export default function SignIn({navigation}) {
   };
 
   return (
-    <ScrollView>
-      <ImageBackground
-        source={require('../../../assets/images/truffles.jpg')}
-        style={styles.image}>
+    <ImageBackground
+      source={require('../../../assets/images/truffles.jpg')}
+      style={styles.image}>
+      <ScrollView>
         <View style={styles.root}>
           <View style={styles.header}>
             <Image source={files.logo} style={{width: 150, height: 150}} />
@@ -94,8 +96,8 @@ export default function SignIn({navigation}) {
             </CustomButton>
           </View>
         </View>
-      </ImageBackground>
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   );
 }
 

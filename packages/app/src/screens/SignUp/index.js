@@ -7,6 +7,7 @@ import {
   TextInput,
   Image,
   Dimensions,
+  LayoutAnimation,
 } from 'react-native';
 import {files} from 'jvtrufas-common/src/files';
 
@@ -36,6 +37,7 @@ export default function SignUp({navigation}) {
   const [error, setError] = useState(null);
 
   const register = async () => {
+    LayoutAnimation.easeInEaseOut();
     if (!isValidEmail(email)) {
       setError('Você digitou um email inválido');
       return;
@@ -73,10 +75,10 @@ export default function SignUp({navigation}) {
   };
 
   return (
-    <ScrollView>
-      <ImageBackground
-        source={require('../../../assets/images/truffles.jpg')}
-        style={styles.image}>
+    <ImageBackground
+      source={require('../../../assets/images/truffles.jpg')}
+      style={styles.image}>
+      <ScrollView>
         <View style={styles.root}>
           <View style={styles.header}>
             <Image source={files.logo} style={{width: 150, height: 150}} />
@@ -151,8 +153,8 @@ export default function SignUp({navigation}) {
             </CustomButton>
           </View>
         </View>
-      </ImageBackground>
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   );
 }
 
