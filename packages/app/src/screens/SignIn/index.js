@@ -102,7 +102,7 @@ export default function SignIn({navigation}) {
 const styles = StyleSheet.create({
   root: {
     backgroundColor: '#5c2f0ccc',
-    height: Dimensions.get('window').height,
+    minHeight: Dimensions.get('window').height - 38.5,
     padding: 20,
     justifyContent: 'space-between',
   },
