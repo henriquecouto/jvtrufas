@@ -58,43 +58,41 @@ export default function SignIn({navigation}) {
     <ImageBackground
       source={require('../../../assets/images/truffles.jpg')}
       style={styles.image}>
-      <ScrollView>
-        <View style={styles.root}>
-          <View style={styles.header}>
-            <Image source={files.logo} style={{width: 150, height: 150}} />
-            <Text style={styles.title}>Trufas</Text>
-          </View>
-          <View style={styles.body}>
-            <Text style={styles.subtitle}>Entre e faça seu pedido</Text>
+      <ScrollView style={styles.root}>
+        <View style={styles.header}>
+          <Image source={files.logo} style={{width: 150, height: 150}} />
+          <Text style={styles.title}>Trufas</Text>
+        </View>
+        <View style={styles.body}>
+          <Text style={styles.subtitle}>Entre e faça seu pedido</Text>
 
-            <View style={styles.form}>
-              <Error message={error} />
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                autoCompleteType="email"
-                autoCapitalize="none"
-                value={email}
-                onChangeText={setEmail}
-              />
-              <TextInput
-                secureTextEntry
-                style={styles.input}
-                placeholder="Senha"
-                autoCompleteType="password"
-                value={password}
-                onChangeText={setPassword}
-              />
-              <CustomButton onPress={login}>Entrar</CustomButton>
-            </View>
+          <View style={styles.form}>
+            <Error message={error} />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              autoCompleteType="email"
+              autoCapitalize="none"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <TextInput
+              secureTextEntry
+              style={styles.input}
+              placeholder="Senha"
+              autoCompleteType="password"
+              value={password}
+              onChangeText={setPassword}
+            />
+            <CustomButton onPress={login}>Entrar</CustomButton>
           </View>
-          <View style={styles.footer}>
-            <CustomButton
-              color="transparent"
-              onPress={() => navigation.push('SignUp')}>
-              Cadastre-se
-            </CustomButton>
-          </View>
+        </View>
+        <View style={styles.footer}>
+          <CustomButton
+            color="transparent"
+            onPress={() => navigation.push('SignUp')}>
+            Cadastre-se
+          </CustomButton>
         </View>
       </ScrollView>
     </ImageBackground>
@@ -104,9 +102,9 @@ export default function SignIn({navigation}) {
 const styles = StyleSheet.create({
   root: {
     backgroundColor: '#5c2f0ccc',
-    minHeight: Dimensions.get('window').height - 38.5,
-    padding: 20,
-    justifyContent: 'space-between',
+    // minHeight: Dimensions.get('window').height - 38.5,
+    paddingHorizontal: 20,
+    // justifyContent: 'space-between',
   },
   image: {
     flex: 1,

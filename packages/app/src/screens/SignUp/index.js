@@ -78,80 +78,78 @@ export default function SignUp({navigation}) {
     <ImageBackground
       source={require('../../../assets/images/truffles.jpg')}
       style={styles.image}>
-      <ScrollView>
-        <View style={styles.root}>
-          <View style={styles.header}>
-            <Image source={files.logo} style={{width: 150, height: 150}} />
-            <Text style={styles.title}>Trufas</Text>
-          </View>
-          <View style={styles.body}>
-            <Text style={styles.subtitle}>Faça seu cadastro</Text>
+      <ScrollView style={styles.root}>
+        <View style={styles.header}>
+          <Image source={files.logo} style={{width: 150, height: 150}} />
+          <Text style={styles.title}>Trufas</Text>
+        </View>
+        <View style={styles.body}>
+          <Text style={styles.subtitle}>Faça seu cadastro</Text>
 
-            <View style={styles.form}>
-              <Error message={error} />
-              <TextInput
-                style={styles.input}
-                placeholder="Seu nome"
-                autoCompleteType="name"
-                value={name}
-                onChangeText={setName}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Whatsapp"
-                autoCompleteType="cc-number"
-                textContentType="telephoneNumber"
-                keyboardType="numeric"
-                dataDetectorTypes="phoneNumber"
-                maxLength={12}
-                value={whatsapp}
-                onChangeText={setWhatsapp}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                autoCompleteType="email"
-                autoCapitalize="none"
-                value={email}
-                onChangeText={setEmail}
-              />
-              <TextInput
-                secureTextEntry
-                style={styles.input}
-                placeholder="Senha"
-                autoCompleteType="password"
-                value={password}
-                onChangeText={setPassword}
-              />
-              <CustomButton onPress={register}>Cadastrar</CustomButton>
-              <Text style={styles.terms}>
-                Ao se cadastrar você concorda com nossos{' '}
-                <Text
-                  onPress={() => {
-                    navigation.navigate('Doc', {name: 'useTerms'});
-                  }}
-                  style={styles.link}>
-                  Termos de Uso
-                </Text>{' '}
-                e{' '}
-                <Text
-                  onPress={() => {
-                    navigation.navigate('Doc', {name: 'privacyPolicy'});
-                  }}
-                  style={styles.link}>
-                  Políticas de Privacidade
-                </Text>
-                .
+          <View style={styles.form}>
+            <Error message={error} />
+            <TextInput
+              style={styles.input}
+              placeholder="Seu nome"
+              autoCompleteType="name"
+              value={name}
+              onChangeText={setName}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Whatsapp"
+              autoCompleteType="cc-number"
+              textContentType="telephoneNumber"
+              keyboardType="numeric"
+              dataDetectorTypes="phoneNumber"
+              maxLength={12}
+              value={whatsapp}
+              onChangeText={setWhatsapp}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              autoCompleteType="email"
+              autoCapitalize="none"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <TextInput
+              secureTextEntry
+              style={styles.input}
+              placeholder="Senha"
+              autoCompleteType="password"
+              value={password}
+              onChangeText={setPassword}
+            />
+            <CustomButton onPress={register}>Cadastrar</CustomButton>
+            <Text style={styles.terms}>
+              Ao se cadastrar você concorda com nossos{' '}
+              <Text
+                onPress={() => {
+                  navigation.navigate('Doc', {name: 'useTerms'});
+                }}
+                style={styles.link}>
+                Termos de Uso
+              </Text>{' '}
+              e{' '}
+              <Text
+                onPress={() => {
+                  navigation.navigate('Doc', {name: 'privacyPolicy'});
+                }}
+                style={styles.link}>
+                Políticas de Privacidade
               </Text>
-            </View>
+              .
+            </Text>
           </View>
-          <View style={styles.footer}>
-            <CustomButton
-              color="transparent"
-              onPress={() => navigation.navigate('SignIn')}>
-              Já tenho uma conta! 😁
-            </CustomButton>
-          </View>
+        </View>
+        <View style={styles.footer}>
+          <CustomButton
+            color="transparent"
+            onPress={() => navigation.navigate('SignIn')}>
+            Já tenho uma conta! 😁
+          </CustomButton>
         </View>
       </ScrollView>
     </ImageBackground>
@@ -161,9 +159,9 @@ export default function SignUp({navigation}) {
 const styles = StyleSheet.create({
   root: {
     backgroundColor: '#5c2f0ccc',
-    minHeight: Dimensions.get('window').height - 38.5,
-    padding: 20,
-    justifyContent: 'space-between',
+    // minHeight: Dimensions.get('window').height - 38.5,
+    paddingHorizontal: 20,
+    // justifyContent: 'space-between',
   },
   image: {
     flex: 1,
