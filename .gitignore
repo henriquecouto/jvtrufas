@@ -8,6 +8,8 @@
 **/uploads/
 packages/api/public/
 
+**.hprof
+
 **/release/
 
 # Logs

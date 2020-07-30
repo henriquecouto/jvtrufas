@@ -172,12 +172,22 @@ export default function CartConfirm({navigation}) {
       </ScrollView>
       {!!type && (
         <View style={styles.footer}>
-          <CustomButton type="custom" onPress={makeOrder}>
-            <View style={styles.buttonNext}>
-              <Text style={styles.buttonText}>Pedir agora!</Text>
-              <Text style={styles.buttonText}>{parsePrice(total)}</Text>
-            </View>
-          </CustomButton>
+          {total >= 7.5 ? (
+            <CustomButton type="custom" onPress={makeOrder}>
+              <View style={styles.buttonNext}>
+                <Text style={styles.buttonText}>Pedir agora!</Text>
+                <Text style={styles.buttonText}>{parsePrice(total)}</Text>
+              </View>
+            </CustomButton>
+          ) : (
+            <CustomButton type="custom">
+              <View style={styles.buttonNext}>
+                <Text style={styles.buttonText}>
+                  O pedido mínimo é de 3 trufas!
+                </Text>
+              </View>
+            </CustomButton>
+          )}
         </View>
       )}
     </>
@@ -237,6 +247,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'FredokaOne-Regular',
     fontSize: 20,
+    flexWrap: 'wrap',
   },
   input: {
     backgroundColor: '#ff660044',
