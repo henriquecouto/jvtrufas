@@ -6,6 +6,7 @@ import CheckBox from '@react-native-community/checkbox';
 import {GlobalContext} from '../../contexts/global';
 import {
   ScrollView,
+  TextInput,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
 import AddressItem from '../../components/AddressItem';
@@ -25,6 +26,8 @@ export default function CartConfirm({navigation}) {
   const [total, setTotal] = useState(0);
   const [type, setType] = useState('');
   const [date, setDate] = useState(new Date());
+  const [observation, setObservation] = useState(false);
+
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [activeInstant, setActiveInstant] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
@@ -64,6 +67,7 @@ export default function CartConfirm({navigation}) {
       order.deliveryDate = date;
       order.status = 'waiting';
       order.purchaserId = auth.user._id;
+      order.observation = observation || undefined;
 
       const {data} = await api.post('/purchaser/order', order, {
         headers: {Authorization: `Bearer ${auth.token}`},
@@ -163,6 +167,19 @@ export default function CartConfirm({navigation}) {
         <View style={styles.divider} />
         <Text style={styles.title}>Endereço</Text>
         <AddressItem {...cart.address} />
+
+        <View style={styles.divider} />
+        <Text style={styles.title}>Observação</Text>
+        <TextInput
+          placeholder="Se desejar adicione uma observação ao seu pedido"
+          style={styles.observation}
+          numberOfLines={3}
+          multiline
+          textAlignVertical="top"
+          maxLength={100}
+          onChangeText={setObservation}
+        />
+
         <View style={styles.divider} />
         <Text style={styles.title}>Pedido</Text>
         {cart.items &&
@@ -259,5 +276,15 @@ const styles = StyleSheet.create({
   checkbox: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  observation: {
+    backgroundColor: '#ff660044',
+    fontSize: 20,
+    fontFamily: 'Roboto-Regular',
+    borderRadius: 20,
+    padding: 15,
+    color: '#5c2f0c',
+    marginVertical: 10,
+    flexWrap: 'wrap',
   },
 });
