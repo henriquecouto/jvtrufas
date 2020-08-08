@@ -182,6 +182,15 @@ export default function Order({ order }) {
                   </Typography>
                 </Grid>
               </Grid>
+              {order.observation && (
+                <Grid container>
+                  <Grid item>
+                    <Typography variant="body1">
+                      <b>Observação: </b> {order.observation}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              )}
             </Paper>
           </Grid>
         )}
