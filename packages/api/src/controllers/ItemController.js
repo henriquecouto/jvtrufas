@@ -32,7 +32,16 @@ exports.createItem = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const items = await Item.find();
+    let items;
+
+    if (req.userType === "admin") {
+      items = await Item.find();
+    }
+
+    if (req.userType === "purchaser") {
+      items = await Item.find({ available: { $ne: false } });
+    }
+
     if (!items.length) {
       return res.status(400).send({ error: "no items finded" });
     }
@@ -84,7 +93,7 @@ exports.edit = async (req, res) => {
       return res.status(400).send({ error: "no updates sended" });
     }
 
-    const item = await Item.findByIdAndUpdate(id, req.body, { new: true });
+    const item = await Item.findByIdAndUpdate(itemId, req.body, { new: true });
     if (!item) {
       return res.status(400).send({ error: "no item finded" });
     }
