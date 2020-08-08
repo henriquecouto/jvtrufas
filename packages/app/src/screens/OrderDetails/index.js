@@ -144,6 +144,15 @@ export default function OrderDetails({navigation, route}) {
         <View style={styles.divider} />
         <Text style={styles.title}>Endereço</Text>
         <AddressItem {...order.address} />
+
+        {order.observation && (
+          <>
+            <View style={styles.divider} />
+            <Text style={styles.title}>Observação</Text>
+            <Text style={styles.info}>{order.observation}</Text>
+          </>
+        )}
+
         <View style={styles.divider} />
         <Text style={styles.title}>Pedido</Text>
         {order.items.map((item, index) => {
