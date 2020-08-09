@@ -23,6 +23,7 @@ const OrderSchema = new mongoose.Schema({
   },
   evaluation: { type: mongoose.SchemaTypes.ObjectId },
   observation: { type: String, maxlength: 200 },
+  change: { type: Number },
   registrationDate: { type: Date, default: Date.now() },
 });
 
