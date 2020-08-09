@@ -3,6 +3,8 @@ import {View, Text, StyleSheet, Button} from 'react-native';
 import Modal from 'react-native-modal';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CheckBox from '@react-native-community/checkbox';
+import {TextInputMask, MaskService} from 'react-native-masked-text';
+
 import {GlobalContext} from '../../contexts/global';
 import {
   ScrollView,
@@ -27,10 +29,12 @@ export default function CartConfirm({navigation}) {
   const [type, setType] = useState('');
   const [date, setDate] = useState(new Date());
   const [observation, setObservation] = useState(false);
+  const [change, setChange] = useState('');
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [activeInstant, setActiveInstant] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [needChange, setNeedChange] = useState(false);
 
   const loadActiveInstant = useCallback(async () => {
     const {data} = await api.get('/purchaser/order/get-instant', {
@@ -68,6 +72,9 @@ export default function CartConfirm({navigation}) {
       order.status = 'waiting';
       order.purchaserId = auth.user._id;
       order.observation = observation || undefined;
+      order.change = needChange
+        ? MaskService.toRawValue('money', change)
+        : undefined;
 
       const {data} = await api.post('/purchaser/order', order, {
         headers: {Authorization: `Bearer ${auth.token}`},
@@ -82,6 +89,7 @@ export default function CartConfirm({navigation}) {
         navigation.navigate('Home');
       }
     } catch (error) {
+      console.log(error);
       console.log('error create order: ', error.response.data);
     }
   };
@@ -167,6 +175,43 @@ export default function CartConfirm({navigation}) {
         <View style={styles.divider} />
         <Text style={styles.title}>Endereço</Text>
         <AddressItem {...cart.address} />
+
+        <View style={styles.divider} />
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Troco</Text>
+          <View style={styles.checkbox}>
+            <TouchableWithoutFeedback
+              style={styles.checkbox}
+              onPress={() => setNeedChange(true)}>
+              <CheckBox tintColors={{true: '#ff6600'}} value={needChange} />
+              <Text>Sim</Text>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              style={styles.checkbox}
+              onPress={() => setNeedChange(false)}>
+              <CheckBox tintColors={{true: '#ff6600'}} value={!needChange} />
+              <Text>Não</Text>
+            </TouchableWithoutFeedback>
+          </View>
+        </View>
+        {needChange && (
+          <TextInputMask
+            autoFocus
+            type="money"
+            options={{
+              precision: 2,
+              separator: ',',
+              delimiter: '.',
+              unit: 'R$',
+              suffixUnit: '',
+            }}
+            placeholder="Precisa de troco para quanto?"
+            style={styles.observation}
+            value={change}
+            onChangeText={setChange}
+            keyboardType="number-pad"
+          />
+        )}
 
         <View style={styles.divider} />
         <Text style={styles.title}>Observação</Text>
