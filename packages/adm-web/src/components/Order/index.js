@@ -115,6 +115,13 @@ export default function Order({ order }) {
           <Grid item>
             <Typography variant="body1">Preço: {parsePrice(total)}</Typography>
           </Grid>
+          {order.change && (
+            <Grid item>
+              <Typography variant="body1">
+                Troco para: {parsePrice(order.change)}
+              </Typography>
+            </Grid>
+          )}
         </Grid>
         <Divider />
         <Grid item container spacing={2}>
