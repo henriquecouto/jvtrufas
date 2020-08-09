@@ -39,6 +39,7 @@ export default function AddAddress({navigation}) {
         value={street}
         onChangeText={setStreet}
         style={styles.input}
+        maxLength={80}
       />
       <TextInput
         placeholder="Número"
@@ -46,18 +47,21 @@ export default function AddAddress({navigation}) {
         onChangeText={setNumber}
         style={styles.input}
         keyboardType="visible-password"
+        maxLength={18}
       />
       <TextInput
         placeholder="Nome do bairro"
         value={neighborhood}
         onChangeText={setNeighborhood}
         style={styles.input}
+        maxLength={50}
       />
       <TextInput
         placeholder="Ponto de referência"
         value={landmark}
         onChangeText={setLandmark}
         style={styles.input}
+        maxLength={50}
       />
       <Text style={styles.input}>Lajedo-PE</Text>
       <CustomButton onPress={add}>Adicionar</CustomButton>
