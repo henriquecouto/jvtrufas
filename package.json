@@ -58,7 +58,9 @@
       "**/react-native-modal",
       "**/react-native-modal/**",
       "**/react-native-webview",
-      "**/react-native-webview/**"
+      "**/react-native-webview/**",
+      "**/react-native-masked-text",
+      "**/react-native-masked-text/**"
     ],
     "packages": [
       "packages/*"
